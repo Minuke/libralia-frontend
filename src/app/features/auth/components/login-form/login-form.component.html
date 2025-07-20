@@ -1,24 +1,24 @@
 <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
-
-  <label for="username">Usuario</label>
-  <input type="text" id="username" name="username" formControlName="username" />
-  @if(getErrorMessage('username')) {
+  <label for="usernameOrEmail">Usuario o correo</label>
+  <input type="text" id="usernameOrEmail" name="usernameOrEmail" formControlName="usernameOrEmail" />
+  @if(getErrorMessage('usernameOrEmail')) {
   <div class="error">
-    {{ getErrorMessage("username") }}
+    {{ getErrorMessage("usernameOrEmail") }}
   </div>
   }
 
   <label for="password">Contraseña</label>
-  <input
-    type="password"
-    id="password"
-    name="password"
-    formControlName="password"
-  />
+  <div class="password-container">
+    <input [type]="mostrarContrasenia() ? 'text' : 'password'" id="password" name="password"
+      formControlName="password" />
+    <img (click)="togglePasswordVisibility()"
+      [src]="mostrarContrasenia() ? './show_password.svg' : './hide_password.svg'" alt="Mostrar/Ocultar contraseña"
+      class="login-form__icon" />
+  </div>
   @if(getErrorMessage('password')) {
-    <div class="error">
-      {{ getErrorMessage("password") }}
-    </div>
+  <div class="error">
+    {{ getErrorMessage("password") }}
+  </div>
   }
 
   <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>

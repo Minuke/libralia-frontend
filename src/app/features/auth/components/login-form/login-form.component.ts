@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { LoginEmailParams, LoginUsernameParams } from '@features/auth/interfaces/login.interface';
 
 @Component({
   selector: 'app-login-form',
@@ -16,10 +17,11 @@ export class LoginFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
 
   public loginForm!: FormGroup;
+  public mostrarContrasenia = signal<boolean>(false);
 
   public ngOnInit(): void {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      usernameOrEmail: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -27,14 +29,19 @@ export class LoginFormComponent implements OnInit {
   public login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+      console.error("Form is invalid");
       return;
+    } else {
+      const { usernameOrEmail, password } = this.loginForm.value;
+      let login: LoginEmailParams | LoginUsernameParams;
+      if (this.isEmail(usernameOrEmail)) {
+        login = { email: usernameOrEmail, password };
+        console.log("Se detectó un email", login);
+      } else {
+        login = { username: usernameOrEmail, password };
+        console.log("Se detectó un username", login);
+      }
     }
-
-    // Procesar datos del formulario
-    const { username, password } = this.loginForm.value;
-    console.log('Credenciales enviadas:', { username, password });
-
-    // Podrías llamar a un servicio aquí
   }
 
   public getErrorMessage(controlName: string): string | null {
@@ -50,5 +57,14 @@ export class LoginFormComponent implements OnInit {
     }
 
     return null;
+  }
+
+  private isEmail(value: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  }
+
+  public togglePasswordVisibility(): void {
+    this.mostrarContrasenia.update((visible) => !visible);
   }
 }
