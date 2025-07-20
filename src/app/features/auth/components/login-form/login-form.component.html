@@ -1,0 +1,25 @@
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+
+  <label for="username">Usuario</label>
+  <input type="text" id="username" name="username" formControlName="username" />
+  @if(getErrorMessage('username')) {
+  <div class="error">
+    {{ getErrorMessage("username") }}
+  </div>
+  }
+
+  <label for="password">Contraseña</label>
+  <input
+    type="password"
+    id="password"
+    name="password"
+    formControlName="password"
+  />
+  @if(getErrorMessage('password')) {
+    <div class="error">
+      {{ getErrorMessage("password") }}
+    </div>
+  }
+
+  <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
+</form>
