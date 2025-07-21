@@ -1,0 +1,11 @@
+.register-form {
+	&__icon {
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		transform: translateY(-50%);
+		width: 20px;
+		height: 20px;
+		cursor: pointer;
+	}
+}
