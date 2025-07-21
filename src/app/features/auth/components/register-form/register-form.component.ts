@@ -1,10 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { forbiddenWordsValidator } from '@features/auth/validators/forbidden-words.validator';
+import { matchingPasswordsValidator } from '@features/auth/validators/matching-passwords.validator';
+import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 
 @Component({
   selector: 'app-register-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputErrorsComponent],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.scss'
 })
@@ -20,7 +22,7 @@ export class RegisterFormComponent {
       email: ["", [Validators.required, Validators.email]],
       password1: ["", [Validators.required, Validators.minLength(8)]],
       password2: ["", [Validators.required, Validators.minLength(8)]]
-    });
+    }, { validators: matchingPasswordsValidator } );
   }
 
   public register(): void {

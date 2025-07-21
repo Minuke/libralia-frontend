@@ -1,19 +1,11 @@
 <form class="register-form" [formGroup]="registerForm" (ngSubmit)="register()">
   <label for="username">Usuario</label>
   <input type="text" id="username" name="username" formControlName="username" />
-  @if(getErrorMessage('username')) {
-  <div class="error">
-    {{ getErrorMessage("username") }}
-  </div>
-  }
+  <app-input-errors [control]="registerForm.get('username')"></app-input-errors>
 
   <label for="email">Correo electrónico</label>
   <input type="text" id="email" name="email" formControlName="email" />
-  @if(getErrorMessage('email')) {
-  <div class="error">
-    {{ getErrorMessage("email") }}
-  </div>
-  }
+  <app-input-errors [control]="registerForm.get('email')"></app-input-errors>
 
   <label for="password1">Contraseña</label>
   <div class="password-container">
@@ -23,11 +15,7 @@
       [src]="mostrarContrasenia() ? './show_password.svg' : './hide_password.svg'" alt="Mostrar/Ocultar contraseña"
       class="register-form__icon" />
   </div>
-  @if(getErrorMessage('password1')) {
-  <div class="error">
-    {{ getErrorMessage("password1") }}
-  </div>
-  }
+  <app-input-errors [control]="registerForm.get('password1')"></app-input-errors>
 
   <label for="password2">Repetir contraseña</label>
   <div class="password-container">
@@ -37,11 +25,7 @@
       [src]="mostrarContrasenia() ? './show_password.svg' : './hide_password.svg'" alt="Mostrar/Ocultar contraseña"
       class="register-form__icon" />
   </div>
-  @if(getErrorMessage('password2')) {
-  <div class="error">
-    {{ getErrorMessage("password2") }}
-  </div>
-  }
+  <app-input-errors [control]="registerForm.get('password2')"></app-input-errors>
 
   <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
 </form>
