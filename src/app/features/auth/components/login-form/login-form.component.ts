@@ -6,10 +6,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { LoginEmailParams, LoginUsernameParams } from '@features/auth/interfaces/login.interface';
+import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputErrorsComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })

@@ -1,11 +1,7 @@
 <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
   <label for="usernameOrEmail">Usuario o correo</label>
   <input type="text" id="usernameOrEmail" name="usernameOrEmail" formControlName="usernameOrEmail" />
-  @if(getErrorMessage('usernameOrEmail')) {
-  <div class="error">
-    {{ getErrorMessage("usernameOrEmail") }}
-  </div>
-  }
+  <app-input-errors [control]="loginForm.get('usernameOrEmail')"></app-input-errors>
 
   <label for="password">Contraseña</label>
   <div class="password-container">
@@ -15,11 +11,7 @@
       [src]="mostrarContrasenia() ? './show_password.svg' : './hide_password.svg'" alt="Mostrar/Ocultar contraseña"
       class="login-form__icon" />
   </div>
-  @if(getErrorMessage('password')) {
-  <div class="error">
-    {{ getErrorMessage("password") }}
-  </div>
-  }
+  <app-input-errors [control]="loginForm.get('password')"></app-input-errors>
 
   <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
 </form>
