@@ -1,1 +1,34 @@
-<p>login-form works!</p>
+<form class="login-form" (ngSubmit)="login()" [formGroup]="loginForm">
+  <div class="login-form__group login-form__group--username">
+    <label for="usernameOrEmail" class="login-form__label">Usuario o correo:</label>
+    <input type="text" id="usernameOrEmail" class="login-form__input" placeholder="Usuario o correo"
+      name="usernameOrEmail" formControlName="usernameOrEmail" required />
+    <app-input-errors [control]="loginForm.get('usernameOrEmail')"></app-input-errors>
+  </div>
+
+  <div class="login-form__group login-form__group--password">
+    <label for="password" class="login-form__label">Contraseña:</label>
+    <div class="login-form__input-wrapper">
+      <input [type]="mostrarContrasenia() ? 'text' : 'password'" id="password"
+        class="login-form__input login-form__input--password" placeholder="Contraseña" name="password"
+        formControlName="password" required />
+      @if (mostrarContrasenia()) {
+      <img (click)="togglePasswordVisibility()" src="./show_password.svg" alt="Ocultar contraseña"
+        class="login-form__icon" />
+      } @else {
+      <img (click)="togglePasswordVisibility()" src="./hide_password.svg" alt="Mostrar contraseña"
+        class="login-form__icon" />
+      }
+    </div>
+    <app-input-errors [control]="loginForm.get('password')"></app-input-errors>
+  </div>
+
+  <div class="login-form__actions">
+    <button class="login-form__button" [disabled]="loginForm.invalid">Iniciar sesión</button>
+  </div>
+
+  <div class="login-form__links">
+    <a class="login-form__link" routerLink="/auth/forgot-password">Olvidé mi contraseña</a>
+    <a class="login-form__link" routerLink="/auth/register">Crear cuenta</a>
+  </div>
+</form>

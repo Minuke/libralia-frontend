@@ -1,0 +1,21 @@
+.login-page {
+  display: grid;
+  grid-template-areas:
+    "title"
+    "form";
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-page__title {
+  grid-area: title;
+  text-align: center;
+}
+
+.login-page app-login-form {
+  grid-area: form;
+}
