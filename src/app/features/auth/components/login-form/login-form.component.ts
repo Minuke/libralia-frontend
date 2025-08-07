@@ -10,7 +10,7 @@ import { InputErrorsComponent } from '@shared/components/input-errors/input-erro
   styleUrl: './login-form.component.scss'
 })
 export class LoginFormComponent {
-  
+
   private readonly fb = inject(FormBuilder);
 
   public loginForm!: FormGroup;
@@ -24,11 +24,7 @@ export class LoginFormComponent {
   }
 
   public login(): void {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      console.error("Form is invalid");
-      return;
-    } else {
+    if (this.loginForm.valid) {
       const { usernameOrEmail, password } = this.loginForm.value;
       let login: LoginEmailParams | LoginUsernameParams;
       if (this.isEmail(usernameOrEmail)) {
@@ -38,6 +34,9 @@ export class LoginFormComponent {
         login = { username: usernameOrEmail, password };
         console.log("Se detectó un username", login);
       }
+    } else {
+      this.loginForm.markAllAsTouched();
+      console.error("Form is invalid");
     }
   }
 
@@ -49,4 +48,5 @@ export class LoginFormComponent {
   public togglePasswordVisibility(): void {
     this.mostrarContrasenia.update((visible) => !visible);
   }
+
 }
