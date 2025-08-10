@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterParams } from '@features/auth/entities/interfaces/register.interface';
+import { LoginService } from '@features/auth/services/login-service.service';
 import { RegisterService } from '@features/auth/services/register-service.service';
 import { forbiddenWordsValidator } from '@features/auth/validators/forbidden-words.validator';
 import { matchingPasswordsValidator } from '@features/auth/validators/matching-passwords.validator';
@@ -17,6 +18,7 @@ import { InputErrorsComponent } from '@shared/components/input-errors/input-erro
 export class RegisterFormComponent {
 
   private readonly fb = inject(FormBuilder);
+  private readonly loginService = inject(LoginService);
   private readonly registerService = inject(RegisterService);
   private readonly router = inject(Router);
 
@@ -38,10 +40,11 @@ export class RegisterFormComponent {
   public register(): void {
     if (this.registerForm.valid) {
       const register: RegisterParams = this.registerForm.value;
-      const success = this.registerService.register(register);
+      const newUser = this.registerService.register(register);
 
-      if (success) {
+      if (newUser) {
         console.log('✅ Registro exitoso');
+        this.loginService.setCurrentUser(newUser);
         this.router.navigate(['dashboard', 'profile']);
       }
     } else {

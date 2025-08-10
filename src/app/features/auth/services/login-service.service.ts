@@ -49,4 +49,9 @@ export class LoginService {
     this.currentUserSignal.set(null);
     this.storageService.clearUser();
   }
+
+  public setCurrentUser(user: User): void {
+    this.currentUserSignal.set(user);
+    this.storageService.setUser(user);
+}
 }

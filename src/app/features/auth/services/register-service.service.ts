@@ -12,16 +12,11 @@ export class RegisterService {
   private readonly usersService = inject(UsersService);
   private readonly storageService = inject(StorageService);
 
-  public register(params: RegisterParams): boolean {
+  public register(params: RegisterParams): User | null {
     const users = this.usersService.users();
-    const exists = users.some(
-      u => u.username.toLowerCase() === params.username.toLowerCase()
-        || u.email.toLowerCase() === params.email.toLowerCase()
-    );
-    if (exists) {
-      console.error('❌ Usuario o email ya existente');
-      return false;
-    }
+    const exists = users.some(u => u.email.toLowerCase() === params.email.toLowerCase());
+
+    if (exists) return null;
 
     const newUser: User = {
       username: params.username,
@@ -30,7 +25,7 @@ export class RegisterService {
     };
 
     this.usersService.addUser(newUser);
-    this.storageService.setUser(newUser);
-    return true;
+    return newUser;
   }
+
 }

@@ -1,11 +1,11 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LoginService } from '@features/auth/services/login-service.service';
-import { Book } from '@shared/entities/interfaces/book.interface';
 import { BooksService } from '@shared/services/books.service';
 
 @Component({
   selector: 'app-profile-page',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss'
 })
