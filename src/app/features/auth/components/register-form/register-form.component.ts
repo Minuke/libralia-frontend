@@ -1,12 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RegisterParams } from '@features/auth/entities/interfaces/register.interface';
+import { RegisterService } from '@features/auth/services/register-service.service';
 import { forbiddenWordsValidator } from '@features/auth/validators/forbidden-words.validator';
 import { matchingPasswordsValidator } from '@features/auth/validators/matching-passwords.validator';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 
 @Component({
   selector: 'app-register-form',
+  standalone: true,
   imports: [ReactiveFormsModule, InputErrorsComponent],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.scss'
@@ -14,6 +17,8 @@ import { InputErrorsComponent } from '@shared/components/input-errors/input-erro
 export class RegisterFormComponent {
 
   private readonly fb = inject(FormBuilder);
+  private readonly registerService = inject(RegisterService);
+  private readonly router = inject(Router);
 
   public registerForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
@@ -33,14 +38,19 @@ export class RegisterFormComponent {
   public register(): void {
     if (this.registerForm.valid) {
       const register: RegisterParams = this.registerForm.value;
-      console.log("Form submitted successfully", register);
+      const success = this.registerService.register(register);
+
+      if (success) {
+        console.log('✅ Registro exitoso');
+        this.router.navigate(['dashboard', 'profile']);
+      }
     } else {
       this.registerForm.markAllAsTouched();
-      console.error("Form is invalid");
+      console.error("Formulario inválido");
     }
   }
 
   public togglePasswordVisibility(): void {
-    this.mostrarContrasenia.update((visible) => !visible);
+    this.mostrarContrasenia.update(visible => !visible);
   }
 }

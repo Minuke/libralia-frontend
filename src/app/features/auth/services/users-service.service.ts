@@ -23,4 +23,8 @@ export class UsersService {
         error: (err) => console.error('Error loading users:', err)
       });
   }
+
+  public addUser(user: User): void {
+    this.usersSignal.update(users => [...users, user]);
+  }
 }

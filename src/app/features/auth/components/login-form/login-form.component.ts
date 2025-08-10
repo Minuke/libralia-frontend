@@ -16,7 +16,7 @@ export class LoginFormComponent {
 
   private readonly fb = inject(FormBuilder);
   private readonly loginService = inject(LoginService);
-   private readonly router = inject(Router);
+  private readonly router = inject(Router);
 
   public loginForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
