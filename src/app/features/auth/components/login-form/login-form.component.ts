@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginEmailParams, LoginUsernameParams } from '@features/auth/entities/interfaces/login.interface';
 import { LoginService } from '@features/auth/services/login-service.service';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
@@ -8,7 +8,7 @@ import { InputErrorsComponent } from '@shared/components/input-errors/input-erro
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputErrorsComponent],
+  imports: [ReactiveFormsModule, InputErrorsComponent, RouterLink],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })

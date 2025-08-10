@@ -1,0 +1,41 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+
+  &__left {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    height: 32px;
+    margin-right: 0.8rem;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: #007bff;
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
