@@ -2,19 +2,21 @@ import { JsonPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginEmailParams, LoginUsernameParams } from '@features/auth/entities/interfaces/login.interface';
+import { LoginService } from '@features/auth/services/login-service.service';
 import { UsersService } from '@features/auth/services/users-service.service';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputErrorsComponent, JsonPipe],
+  imports: [ReactiveFormsModule, InputErrorsComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
 export class LoginFormComponent {
 
   private readonly fb = inject(FormBuilder);
+  private readonly loginService = inject(LoginService);
 
   public loginForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
@@ -38,7 +40,12 @@ export class LoginFormComponent {
         login = { username: usernameOrEmail, password };
         console.log("Login con username:", login);
       }
-
+      const valid = this.loginService.validateCredentials(login);
+      if (valid) {
+        console.log('✅ Login correcto');
+      } else {
+        console.error('❌ Usuario o contraseña incorrectos');
+      }
     } else {
       this.loginForm.markAllAsTouched();
       console.error("Formulario inválido");
