@@ -1,11 +1,14 @@
-import { Component, inject, signal } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginEmailParams, LoginUsernameParams } from '@features/auth/entities/interfaces/login.interface';
+import { UsersService } from '@features/auth/services/users-service.service';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, InputErrorsComponent],
+  standalone: true,
+  imports: [ReactiveFormsModule, InputErrorsComponent, JsonPipe],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
@@ -16,7 +19,7 @@ export class LoginFormComponent {
   public loginForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.loginForm = this.fb.group({
       usernameOrEmail: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -27,16 +30,18 @@ export class LoginFormComponent {
     if (this.loginForm.valid) {
       const { usernameOrEmail, password } = this.loginForm.value;
       let login: LoginEmailParams | LoginUsernameParams;
+
       if (this.isEmail(usernameOrEmail)) {
         login = { email: usernameOrEmail, password };
-        console.log("Se detectó un email", login);
+        console.log("Login con email:", login);
       } else {
         login = { username: usernameOrEmail, password };
-        console.log("Se detectó un username", login);
+        console.log("Login con username:", login);
       }
+
     } else {
       this.loginForm.markAllAsTouched();
-      console.error("Form is invalid");
+      console.error("Formulario inválido");
     }
   }
 
