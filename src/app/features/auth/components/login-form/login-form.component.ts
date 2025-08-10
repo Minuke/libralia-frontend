@@ -1,9 +1,8 @@
-import { JsonPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginEmailParams, LoginUsernameParams } from '@features/auth/entities/interfaces/login.interface';
 import { LoginService } from '@features/auth/services/login-service.service';
-import { UsersService } from '@features/auth/services/users-service.service';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 
 @Component({
@@ -17,6 +16,7 @@ export class LoginFormComponent {
 
   private readonly fb = inject(FormBuilder);
   private readonly loginService = inject(LoginService);
+   private readonly router = inject(Router);
 
   public loginForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
@@ -40,9 +40,10 @@ export class LoginFormComponent {
         login = { username: usernameOrEmail, password };
         console.log("Login con username:", login);
       }
-      const valid = this.loginService.validateCredentials(login);
+      const valid = this.loginService.login(login);
       if (valid) {
         console.log('✅ Login correcto');
+        this.router.navigate(['dashboard', 'profile']);
       } else {
         console.error('❌ Usuario o contraseña incorrectos');
       }

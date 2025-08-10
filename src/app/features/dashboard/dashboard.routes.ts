@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
 
   export enum DashboardPages {

@@ -1,0 +1,5 @@
+@if (isAuthenticated()) {
+  <p>Bienvenido, {{ currentUser()?.username }} 👋</p>
+} @else {
+  <p>Estás navegando como usuario anónimo.</p>
+}
