@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { UsersService } from './users-service.service';
+import { UsersService } from '../../../shared/services/users-service.service';
 import { StorageService } from '@core/services/storage.service';
 import { User } from '@shared/entities/interfaces/user.interface';
 import { RegisterParams } from '../entities/interfaces/register.interface';

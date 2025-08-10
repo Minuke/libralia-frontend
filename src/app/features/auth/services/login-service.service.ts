@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, computed } from '@angular/core';
-import { UsersService } from './users-service.service';
+import { UsersService } from '../../../shared/services/users-service.service';
 import { StorageService } from '@core/services/storage.service';
 import { LoginEmailParams, LoginUsernameParams } from '../entities/interfaces/login.interface';
 import { User } from '@shared/entities/interfaces/user.interface';

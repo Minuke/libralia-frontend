@@ -1,5 +1,12 @@
 @if (isAuthenticated()) {
-  <p>Bienvenido, {{ currentUser()?.username }} 👋</p>
+<p>Bienvenido, {{ currentUser()?.username }} 👋</p>
+<ul>
+  @for(book of userBooks(); track book.title) {
+  <li>{{book.title}}</li>
+  <li>{{book.author}}</li>
+  }
+</ul>
+
 } @else {
-  <p>Estás navegando como usuario anónimo.</p>
+<p>Estás navegando como usuario anónimo.</p>
 }
