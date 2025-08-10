@@ -1,7 +1,8 @@
 import { inject, Injectable, signal, computed } from '@angular/core';
 import { UsersService } from './users-service.service';
+import { StorageService } from '@core/services/storage.service';
 import { LoginEmailParams, LoginUsernameParams } from '../entities/interfaces/login.interface';
-import { User } from '../entities/interfaces/user.interface';
+import { User } from '@shared/entities/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,17 +10,20 @@ import { User } from '../entities/interfaces/user.interface';
 export class LoginService {
 
   private readonly usersService = inject(UsersService);
+  private readonly storageService = inject(StorageService);
 
-  // Señal interna (privada) que guarda el usuario autenticado
   private readonly currentUserSignal = signal<User | null>(null);
 
-  // Exponemos una computed pública para acceder reactivamente al usuario
   public readonly currentUser = computed(() => this.currentUserSignal());
-
-  // Flag de autenticación como computed pública
   public readonly isAuthenticated = computed(() => this.currentUserSignal() !== null);
 
-  /** Intenta autenticar al usuario */
+  constructor() {
+    const storedUser = this.storageService.getUser();
+    if (storedUser) {
+      this.currentUserSignal.set(storedUser);
+    }
+  }
+
   public login(params: LoginEmailParams | LoginUsernameParams): boolean {
     const users = this.usersService.users();
     let user: User | undefined;
@@ -32,14 +36,17 @@ export class LoginService {
 
     if (user && user.password === params.password) {
       this.currentUserSignal.set(user);
+      this.storageService.setUser(user);
       return true;
     }
 
     this.currentUserSignal.set(null);
+    this.storageService.clearUser();
     return false;
   }
 
   public logout(): void {
     this.currentUserSignal.set(null);
+    this.storageService.clearUser();
   }
 }

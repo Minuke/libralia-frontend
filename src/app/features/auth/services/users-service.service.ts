@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { User } from '../entities/interfaces/user.interface';
+import { User } from '../../../shared/entities/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
