@@ -18,8 +18,9 @@ export class ProfilePageComponent {
   public readonly currentUser = this.loginService.currentUser;
 
   public readonly userBooks = computed(() => {
-    const username = this.currentUser()!.username;
-    return this.booksService.getBooksByAuthor(username);
+    const id = this.currentUser()!.id;
+    return this.booksService.getBooksByAuthor(id);
   });
+
 
 }

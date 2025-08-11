@@ -32,8 +32,9 @@ export class BooksService {
   /**
  * Devuelve un array de libros cuyo author coincida con el username dado
  */
-  public getBooksByAuthor(username: string): Book[] {
-    return this.booksSignal().filter(book => book.author === username);
+  public getBooksByAuthor(userId: number): Book[] {
+    return this.booksSignal().filter(book => book.authorId === userId);
   }
+
 
 }

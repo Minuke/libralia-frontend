@@ -27,4 +27,15 @@ export class UsersService {
   public addUser(user: User): void {
     this.usersSignal.update(users => [...users, user]);
   }
+
+  public updateUser(updated: User): void {
+  this.usersSignal.update(users => {
+    return users.map(u =>
+      u.email.toLowerCase() === updated.email.toLowerCase()
+        ? { ...u, ...updated }
+        : u
+    );
+  });
+}
+
 }

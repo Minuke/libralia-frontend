@@ -19,6 +19,7 @@ export class RegisterService {
     if (exists) return null;
 
     const newUser: User = {
+      id: params.username.length,
       username: params.username,
       email: params.email,
       password: params.password1
