@@ -9,14 +9,13 @@ import { LoginService } from '@features/auth/services/login-service.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
 
   public readonly isAuthenticated = this.loginService.isAuthenticated;
   public readonly currentUser = this.loginService.currentUser;
 
-    public logout(): void {
+  public logout(): void {
     this.loginService.logout();
     this.router.navigate(['/auth/login']);
   }

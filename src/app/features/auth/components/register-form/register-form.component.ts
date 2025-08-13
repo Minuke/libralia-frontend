@@ -45,7 +45,7 @@ export class RegisterFormComponent {
       if (newUser) {
         console.log('✅ Registro exitoso');
         this.loginService.setCurrentUser(newUser);
-        this.router.navigate(['dashboard', 'profile']);
+        this.router.navigate(['/dashboard/profile']);
       }
     } else {
       this.registerForm.markAllAsTouched();

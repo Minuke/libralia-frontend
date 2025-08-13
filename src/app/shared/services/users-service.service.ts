@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { User } from '../entities/interfaces/user.interface';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { User } from '@shared/entities/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
 
+export class UsersService {
   private readonly http = inject(HttpClient);
 
   private readonly usersSignal = signal<User[]>([]);
@@ -16,26 +16,41 @@ export class UsersService {
     this.loadUsers();
   }
 
+  /** Carga inicial de usuarios desde mock/API */
   private loadUsers(): void {
-    this.http.get<User[]>('./mocks/users.json')
-      .subscribe({
-        next: (data) => this.usersSignal.set(data),
-        error: (err) => console.error('Error loading users:', err)
-      });
+    this.http.get<User[]>('./mocks/users.json').subscribe({
+      next: data => this.usersSignal.set(data),
+      error: err => console.error('Error loading users:', err)
+    });
   }
 
+  /** Añadir un nuevo usuario */
   public addUser(user: User): void {
     this.usersSignal.update(users => [...users, user]);
   }
 
+  /** Actualizar datos de un usuario existente */
   public updateUser(updated: User): void {
-  this.usersSignal.update(users => {
-    return users.map(u =>
-      u.email.toLowerCase() === updated.email.toLowerCase()
-        ? { ...u, ...updated }
-        : u
+    this.usersSignal.update(users =>
+      users.map(u =>
+        u.email.toLowerCase() === updated.email.toLowerCase()
+          ? { ...u, ...updated }
+          : u
+      )
     );
-  });
-}
+  }
 
+  /** Buscar usuario por email */
+  public findByEmail(email: string): User | undefined {
+    return this.usersSignal().find(
+      u => u.email.toLowerCase() === email.toLowerCase()
+    );
+  }
+
+  /** Buscar usuario por username */
+  public findByUsername(username: string): User | undefined {
+    return this.usersSignal().find(
+      u => u.username.toLowerCase() === username.toLowerCase()
+    );
+  }
 }

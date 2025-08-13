@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LoginEmailParams, LoginUsernameParams } from '@features/auth/entities/interfaces/login.interface';
@@ -43,7 +43,7 @@ export class LoginFormComponent {
       const valid = this.loginService.login(login);
       if (valid) {
         console.log('✅ Login correcto');
-        this.router.navigate(['dashboard', 'profile']);
+        this.router.navigate(['/dashboard/profile']);
       } else {
         console.error('❌ Usuario o contraseña incorrectos');
       }

@@ -1,0 +1,21 @@
+.profile-edit-page {
+  display: grid;
+  grid-template-areas:
+    "title"
+    "form";
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.profile-edit-page__title {
+  grid-area: title;
+  text-align: center;
+}
+
+.profile-edit-page app-profile-edit-form {
+  grid-area: form;
+}

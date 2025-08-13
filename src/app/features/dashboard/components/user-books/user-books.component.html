@@ -1,0 +1,28 @@
+<div class="books-section">
+
+  <div class="books-header">
+    <h2 class="books-header__title">📚 Tus libros</h2>
+    <button class="btn btn-primary" routerLink="/editor/workspace">➕ Nuevo libro</button>
+  </div>
+
+  <div class="books-list">
+    @for (book of userBooks(); track book.title) {
+    <div class="book-card">
+      <img [src]="book.cover" [alt]="book.title" class="book-cover" />
+      <div class="book-details">
+        <h3 class="book-title">{{ book.title }}</h3>
+        <div class="book-actions">
+          <button class="btn btn-secondary">✏️ Editar</button>
+          <button class="btn btn-danger">🗑️ Eliminar</button>
+        </div>
+      </div>
+    </div>
+    } @empty {
+      <p class="empty-message">Aún no tienes libros en tu colección.</p>
+    }
+  </div>
+
+
+
+
+</div>

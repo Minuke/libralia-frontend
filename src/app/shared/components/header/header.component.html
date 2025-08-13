@@ -6,14 +6,14 @@
 
   <nav class="app-header__right">
     @if(isAuthenticated()) {
-    <a [routerLink]="['/dashboard/profile']" class="app-header__link">
+    <a routerLink="/dashboard/profile" class="app-header__link">
       {{ currentUser()?.username }}
     </a>
     <a (click)="logout()" class="app-header__link">
       Cerrar sesión
     </a>
     } @else {
-    <a [routerLink]="['/auth/login']" class="app-header__link">
+    <a routerLink="/auth/login" class="app-header__link">
       Login
     </a>
     }
