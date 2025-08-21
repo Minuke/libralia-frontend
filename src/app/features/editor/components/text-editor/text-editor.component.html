@@ -7,7 +7,7 @@
   </div>
   <div>
     <quill-editor class="editor-form__group editor-form__group--contento" formControlName="contento"
-      [modules]="modulesQuill" (onEditorChanged)="onChangeEditor($event)"></quill-editor>
+      [modules]="modulesQuill" (onContentChanged)="onChangeEditor($event)"></quill-editor>
     <app-input-errors [control]="editorForm.get('contento')"></app-input-errors>
   </div>
   <div class="editor-form__actions">
