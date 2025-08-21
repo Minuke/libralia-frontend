@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Book } from '../entities/interfaces/book.interface';
+import { Book } from '../entities/interfaces/books.interface';
 
 @Injectable({
   providedIn: 'root'

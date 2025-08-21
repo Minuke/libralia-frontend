@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Book } from '@features/dashboard/entities/interfaces/book.interface';
+import { Book } from '@features/dashboard/entities/interfaces/books.interface';
 
 @Component({
   selector: 'app-user-books',

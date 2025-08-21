@@ -21,7 +21,7 @@ export class LoginFormComponent {
   public loginForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.loginForm = this.fb.group({
       usernameOrEmail: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
