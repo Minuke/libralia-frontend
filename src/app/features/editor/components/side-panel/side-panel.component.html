@@ -3,41 +3,35 @@
 
     <nav class="side-panel__icons">
       @for (item of menuItems; track item.label) {
-        <button
-          class="side-panel__icon"
-          [class.side-panel__icon--active]="selectedMenu()?.label === item.label"
-          (click)="selectMenu(item)">
-          <img
-            [src]="'/images/' + item.icon"
-            [alt]="item.label"
-            class="side-panel__icon-img" />
-        </button>
+      <button class="side-panel__icon"
+        [class.side-panel__icon--active]="item.label === selectedMenu()?.label || item.options.includes(selectedOption()!)"
+        (click)="selectMenu(item)">
+        <img [src]="'/images/' + item.icon" [alt]="item.label" class="side-panel__icon-img" />
+      </button>
       }
     </nav>
 
     @if (selectedMenu()) {
-      <div class="side-panel__menu">
-        <h3 class="side-panel__menu-title">{{ selectedMenu()?.label }}</h3>
-        <ul class="side-panel__menu-list">
-          @for (option of selectedMenu()?.options; track option) {
-            <li
-              class="side-panel__menu-item"
-              [class.side-panel__menu-item--active]="selectedOption() === option"
-              (click)="selectOption(selectedMenu()!.label, option, selectedMenu()!.icon)">
-              {{ option }}
-            </li>
-          }
-        </ul>
-      </div>
+    <div class="side-panel__menu">
+      <h3 class="side-panel__menu-title">{{ selectedMenu()?.label }}</h3>
+      <ul class="side-panel__menu-list">
+        @for (option of selectedMenu()?.options; track option) {
+        <li class="side-panel__menu-item" [class.side-panel__menu-item--active]="selectedOption() === option"
+          (click)="selectOption(selectedMenu()!.label, option, selectedMenu()!.icon)">
+          {{ option }}
+        </li>
+        }
+      </ul>
+    </div>
     }
 
   </aside>
 
   <button class="side-panel-toggle" (click)="togglePanel()">
-    @if (!isOpen()) { 
-      <span>&#9654;</span> 
-    } @else { 
-      <span>&#9664;</span> 
+    @if (!isOpen()) {
+    <span>&#9654;</span>
+    } @else {
+    <span>&#9664;</span>
     }
   </button>
 </div>
