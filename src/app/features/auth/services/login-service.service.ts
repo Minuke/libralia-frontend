@@ -24,7 +24,6 @@ export class LoginService {
     }
   }
 
-  /** Iniciar sesión por email o username */
   public login(params: LoginEmailParams | LoginUsernameParams): boolean {
     let user: User | undefined;
 
@@ -43,13 +42,11 @@ export class LoginService {
     return false;
   }
 
-  /** Cerrar sesión */
   public logout(): void {
     this.currentUserSignal.set(null);
     this.storageService.clearUser();
   }
 
-  /** Establecer usuario actual */
   public setCurrentUser(user: User): void {
     this.currentUserSignal.set(user);
     this.storageService.setUser(user);

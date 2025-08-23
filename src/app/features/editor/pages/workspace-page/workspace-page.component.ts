@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { SidePanelComponent } from '@features/editor/components/side-panel/side-panel.component';
 import { TextEditorComponent } from '@features/editor/components/text-editor/text-editor.component';
 import { TopicPanelComponent } from '@features/editor/components/topic-panel/topic-panel.component';
+import { Menu } from '@features/editor/entities/enums/menu.enum';
+import { OptionSelected } from '@features/editor/entities/interfaces/side-panel.interface';
 
 @Component({
   selector: 'app-workspace-page',
@@ -11,16 +13,17 @@ import { TopicPanelComponent } from '@features/editor/components/topic-panel/top
   styleUrl: './workspace-page.component.scss'
 })
 export class WorkspacePageComponent {
-  
-  public selectedOption = signal<{ menu: string, option: string, icon: string }>({
-    menu: 'Manuscrito',
+
+  public selectedOption = signal<OptionSelected>({
+    menu: Menu.Manuscrito,
     option: 'Libro',
-    icon: 'menu-book.png'
+    icon: 'menu-book.png',
   });
 
-  public onOptionSelected(selection: { menu: string, option: string, icon: string }) {
+  public isManuscrito = computed(() => this.selectedOption().menu === Menu.Manuscrito);
+
+  public onOptionSelected(selection: OptionSelected): void {
     this.selectedOption.set(selection);
-    console.log('Opción seleccionada:', this.selectedOption());
   }
 
 }

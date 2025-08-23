@@ -1,20 +1,14 @@
 <div class="workspace-page">
-  <app-side-panel
-    (optionSelected)="onOptionSelected($event)">
-  </app-side-panel>
+  <app-side-panel (optionSelected)="onOptionSelected($event)"></app-side-panel>
 
-  <ng-container [ngSwitch]="selectedOption().menu">
-    <app-text-editor 
-      *ngSwitchCase="'Manuscrito'"
-      [ngClass]="{'editor-area': selectedOption().menu === 'Manuscrito'}">
-    </app-text-editor>
-    
+  @if (selectedOption().menu === 'Manuscrito' && selectedOption().option === 'Libro') {
+    <app-text-editor class="editor-area"></app-text-editor>
+  } @else {
     <app-topic-panel
-      *ngSwitchDefault
-      [ngClass]="{'content-area': selectedOption().menu !== 'Manuscrito'}"
+      class="content-area"
       [menu]="selectedOption().menu"
       [option]="selectedOption().option"
       [icon]="selectedOption().icon">
     </app-topic-panel>
-  </ng-container>
+  }
 </div>

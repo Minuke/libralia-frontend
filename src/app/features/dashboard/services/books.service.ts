@@ -16,7 +16,6 @@ export class BooksService {
     this.loadBooks();
   }
 
-  /** Cargar libros iniciales */
   private loadBooks(): void {
     this.http.get<Book[]>('./mocks/books.json').subscribe({
       next: data => this.booksSignal.set(data),
@@ -24,13 +23,12 @@ export class BooksService {
     });
   }
 
-  /** Añadir un nuevo libro */
   public addBook(book: Book): void {
     this.booksSignal.update(books => [...books, book]);
   }
 
-  /** Libros por ID de autor */
   public getBooksByAuthor(authorId: number): Book[] {
     return this.booksSignal().filter(book => book.authorId === authorId);
   }
+  
 }

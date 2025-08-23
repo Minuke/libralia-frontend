@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Blog } from '@features/editor/entities/blogs.interface';
+import { Blog } from '@features/editor/entities/interfaces/blogs.interface';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 import { ContentChange, QuillModule } from 'ngx-quill';
 import { Delta } from 'quill';

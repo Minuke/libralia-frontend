@@ -10,7 +10,6 @@ import { RegisterParams } from '../entities/interfaces/register.interface';
 export class RegisterService {
   private readonly usersService = inject(UsersService);
 
-  /** Registrar un nuevo usuario */
   public register(params: RegisterParams): User | null {
     const exists = this.usersService.findByEmail(params.email);
     if (exists) return null;
