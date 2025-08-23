@@ -4,6 +4,24 @@
     "aside form";
   grid-template-rows: auto;
   grid-template-columns: auto 1fr;
+  height: 100vh;
+}
+
+.editor-area {
+  grid-area: form;
+  padding: 2rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para el área del topic panel (con el ancho del 100%) */
+.content-area {
+  grid-area: form;
+  padding: 2rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .workspace-page app-text-editor {

@@ -1,7 +1,7 @@
 .side-panel-wrapper {
   display: flex;
   position: relative;
-  height: calc(100vh - 56px); // debajo del header
+  height: 100vh;
   transition: all 0.3s ease;
 
   &--open {
@@ -116,7 +116,7 @@
   border-radius: 8px;
 
   .side-panel__icon-img {
-    filter: brightness(0) saturate(100%) invert(25%) sepia(85%) saturate(3483%) hue-rotate(205deg) brightness(93%) contrast(97%);
+    
   }
 }
 

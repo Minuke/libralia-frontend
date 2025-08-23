@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-side-panel',
@@ -8,25 +8,41 @@ import { Component } from '@angular/core';
   styleUrl: './side-panel.component.scss'
 })
 export class SidePanelComponent {
-  isOpen = false;
+@Output() optionSelected = new EventEmitter<{ menu: string, option: string, icon: string }>();
+  constructor() {
+    this.optionSelected.emit({ 
+      menu: this.selectedMenu.label, 
+      option: this.selectedOption,
+      icon: this.selectedMenu.icon
+    });
+  }
 
-  menuItems = [
-    { icon: 'menu-book.png', label: 'Books', options: ['Chapters', 'Notes'] },
-    { icon: 'menu-history.png', label: 'History', options: ['Timeline', 'Events'] },
-    { icon: 'menu-characters.png', label: 'Characters', options: ['Heroes', 'Villains'] },
-    { icon: 'menu-locations.png', label: 'Locations', options: ['Map', 'Places'] },
+  public isOpen = false;
+
+
+  public menuItems = [
+    { icon: 'menu-book.png', label: 'Manuscrito', options: ['Libro', 'Capítulos'] },
+    { icon: 'menu-history.png', label: 'History', options: ['Cronologia', 'Eventos'] },
+    { icon: 'menu-characters.png', label: 'Characters', options: ['Héroes', 'Villanos'] },
+    { icon: 'menu-locations.png', label: 'Locations', options: ['Lugares', 'Mapas'] },
   ];
 
-  selectedMenu: any = this.menuItems[0];
+  public selectedMenu: any = this.menuItems[0];
+  public selectedOption: string = 'Libro';
 
-  togglePanel() {
+  public togglePanel() {
     this.isOpen = !this.isOpen;
   }
 
-  selectMenu(item: any) {
+  public selectMenu(item: any) {
     this.selectedMenu = item;
     if (!this.isOpen) {
-      this.isOpen = true; // abre panel si está cerrado
+      this.isOpen = true;
     }
+  }
+
+  public selectOption(menuLabel: string, optionLabel: string, menuIcon: string) {
+    this.selectedOption = optionLabel;
+    this.optionSelected.emit({ menu: menuLabel, option: optionLabel, icon: menuIcon });
   }
 }

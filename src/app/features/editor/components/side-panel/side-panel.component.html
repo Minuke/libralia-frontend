@@ -1,10 +1,9 @@
 <div class="side-panel-wrapper" [class.side-panel-wrapper--open]="isOpen">
-  <!-- Panel lateral -->
   <aside class="side-panel">
-    <!-- Columna de iconos -->
     <nav class="side-panel__icons">
       <button 
         class="side-panel__icon" 
+        [class.side-panel__icon--active]="selectedMenu?.label === item.label"
         *ngFor="let item of menuItems" 
         (click)="selectMenu(item)">
         <img 
@@ -14,22 +13,24 @@
       </button>
     </nav>
 
-    <!-- Panel desplegable -->
     <div class="side-panel__menu" *ngIf="isOpen">
       <h3 class="side-panel__menu-title">{{ selectedMenu?.label }}</h3>
       <ul class="side-panel__menu-list">
-        <li class="side-panel__menu-item" *ngFor="let option of selectedMenu?.options">
+        <li 
+          class="side-panel__menu-item" 
+          [class.side-panel__menu-item--active]="selectedOption === option"
+          *ngFor="let option of selectedMenu?.options"
+          (click)="selectOption(selectedMenu.label, option, selectedMenu.icon)">
           {{ option }}
         </li>
       </ul>
     </div>
   </aside>
 
-  <!-- Botón de abrir/cerrar (pestaña al borde derecho del aside) -->
   <button 
     class="side-panel-toggle" 
     (click)="togglePanel()">
-    <span *ngIf="!isOpen">&#9654;</span> <!-- Flecha derecha -->
-    <span *ngIf="isOpen">&#9664;</span> <!-- Flecha izquierda -->
+    <span *ngIf="!isOpen">&#9654;</span>
+    <span *ngIf="isOpen">&#9664;</span>
   </button>
 </div>
