@@ -1,0 +1,35 @@
+<div class="side-panel-wrapper" [class.side-panel-wrapper--open]="isOpen">
+  <!-- Panel lateral -->
+  <aside class="side-panel">
+    <!-- Columna de iconos -->
+    <nav class="side-panel__icons">
+      <button 
+        class="side-panel__icon" 
+        *ngFor="let item of menuItems" 
+        (click)="selectMenu(item)">
+        <img 
+          [src]="'/images/' + item.icon" 
+          [alt]="item.label" 
+          class="side-panel__icon-img" />
+      </button>
+    </nav>
+
+    <!-- Panel desplegable -->
+    <div class="side-panel__menu" *ngIf="isOpen">
+      <h3 class="side-panel__menu-title">{{ selectedMenu?.label }}</h3>
+      <ul class="side-panel__menu-list">
+        <li class="side-panel__menu-item" *ngFor="let option of selectedMenu?.options">
+          {{ option }}
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Botón de abrir/cerrar (pestaña al borde derecho del aside) -->
+  <button 
+    class="side-panel-toggle" 
+    (click)="togglePanel()">
+    <span *ngIf="!isOpen">&#9654;</span> <!-- Flecha derecha -->
+    <span *ngIf="isOpen">&#9664;</span> <!-- Flecha izquierda -->
+  </button>
+</div>
