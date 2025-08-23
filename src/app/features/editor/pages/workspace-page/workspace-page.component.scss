@@ -1,21 +1,17 @@
 .workspace-page {
   display: grid;
   grid-template-areas:
-    "title"
-    "form";
-  grid-template-rows: auto 1fr;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  padding: 2rem;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.workspace-page__title {
-  grid-area: title;
-  text-align: center;
+    "aside form";
+  grid-template-rows: auto;
+  grid-template-columns: auto 1fr;
 }
 
 .workspace-page app-text-editor {
   grid-area: form;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.workspace-page app-side-panel {
+  grid-area: aside;
 }
