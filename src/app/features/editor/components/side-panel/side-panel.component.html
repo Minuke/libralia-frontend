@@ -3,11 +3,11 @@
 
     <nav class="side-panel__icons">
       @for (item of menuItems; track item.label) {
-      <button class="side-panel__icon"
-        [class.side-panel__icon--active]="item.label === selectedMenu()?.label || item.options.includes(selectedOption()!)"
+      <button class="side-panel__icon" [class.side-panel__icon--active]="item.label === activeMenu()"
         (click)="selectMenu(item)">
         <img [src]="'/images/' + item.icon" [alt]="item.label" class="side-panel__icon-img" />
       </button>
+
       }
     </nav>
 
