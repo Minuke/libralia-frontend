@@ -12,7 +12,6 @@
 	background-color: #f5f5f5;
 	border-radius: 8px;
 
-	// === GRUPOS DE CAMPOS ===
 	&__group {
 		display: flex;
 		flex-direction: column;
@@ -27,12 +26,10 @@
 		}
 	}
 
-	// === LABELS ===
 	&__label {
 		margin-bottom: 5px;
 	}
 
-	// === INPUTS ===
 	&__input-wrapper {
 		position: relative;
 		width: 100%;
@@ -47,11 +44,10 @@
 		box-sizing: border-box;
 
 		&--password {
-			padding-right: 40px; // espacio para el icono
+			padding-right: 40px;
 		}
 	}
 
-	// === ICONO CONTRASEÑA ===
 	&__icon {
 		position: absolute;
 		top: 50%;
@@ -62,14 +58,12 @@
 		cursor: pointer;
 	}
 
-	// === ERRORES ===
 	&__error {
 		color: red;
 		font-size: 14px;
 		margin-top: 5px;
 	}
 
-	// === BOTÓN DE ENVÍO ===
 	&__actions {
 		grid-area: actions;
 		display: flex;
@@ -92,7 +86,6 @@
 		}
 	}
 
-	// === ENLACES SECUNDARIOS ===
 	&__links {
 		grid-area: links;
 		display: flex;

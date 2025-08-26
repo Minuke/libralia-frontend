@@ -4,6 +4,9 @@
   border-radius: 8px;
   border: 1px solid #dee2e6;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 .topic-panel__header {
@@ -11,6 +14,7 @@
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .topic-panel__icon {
@@ -22,6 +26,8 @@
   font-size: 1.8rem;
   font-weight: 700;
   color: #333;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .topic-panel__description {
@@ -30,4 +36,6 @@
   color: #555;
   border-left: 4px solid #007bff;
   padding-left: 1rem;
+  white-space: normal;
+  word-break: break-word;
 }
