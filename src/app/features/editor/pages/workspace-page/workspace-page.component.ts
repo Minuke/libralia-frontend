@@ -3,7 +3,8 @@ import { Component, inject } from '@angular/core';
 import { SidePanelComponent } from '@features/editor/components/side-panel/side-panel.component';
 import { TextEditorComponent } from '@features/editor/components/text-editor/text-editor.component';
 import { TopicPanelComponent } from '@features/editor/components/topic-panel/topic-panel.component';
-import { WorkspaceService } from '@features/editor/services/workspace.service';
+import { SidePanelService } from '@features/editor/services/side-panel.service';
+
 
 @Component({
   selector: 'app-workspace-page',
@@ -13,9 +14,9 @@ import { WorkspaceService } from '@features/editor/services/workspace.service';
 })
 export class WorkspacePageComponent {
 
-  private readonly workspace = inject(WorkspaceService);
+  private readonly sidePanelService = inject(SidePanelService);
 
-  public selectedOption = this.workspace.selectedOption;
-  public isManuscrito = this.workspace.isManuscrito;
+  public selectedOption = this.sidePanelService.selectedOption;
+  public isManuscrito = this.sidePanelService.isManuscrito;
 
 }

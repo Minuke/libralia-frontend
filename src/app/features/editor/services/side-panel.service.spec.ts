@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { SidePanelService } from './side-panel.service';
 
-import { WorkspaceService } from './workspace.service';
-
-describe('WorkspaceService', () => {
-  let service: WorkspaceService;
+describe('SidePanelService', () => {
+  let service: SidePanelService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WorkspaceService);
+    service = TestBed.inject(SidePanelService);
   });
 
   it('should be created', () => {

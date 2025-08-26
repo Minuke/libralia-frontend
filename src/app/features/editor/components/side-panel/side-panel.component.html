@@ -10,11 +10,11 @@
       }
     </nav>
 
-    @if (selectedMenu()) {
+    @if (selectedMenu() && isOpen()) {
     <div class="side-panel__menu">
       <h3 class="side-panel__menu-title">{{ selectedMenu()!.label }}</h3>
       <ul class="side-panel__menu-list">
-        @for (option of selectedMenu()!.options; track option) {
+        @for (option of selectedMenu()!.options; track $index) {
         <li class="side-panel__menu-item" [class.side-panel__menu-item--active]="selectedOption().option === option"
           (click)="selectOption(selectedMenu()!.label, option, selectedMenu()!.icon)">
           {{ option }}

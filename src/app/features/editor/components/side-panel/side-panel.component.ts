@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, OnDestroy, OnInit, Signal } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { Menu } from '@features/editor/entities/enums/menu.enum';
 import { MenuItem } from '@features/editor/entities/interfaces/side-panel.interface';
-import { WorkspaceService } from '@features/editor/services/workspace.service';
+import { SidePanelService } from '@features/editor/services/side-panel.service';
 
 
 @Component({
@@ -13,43 +12,38 @@ import { WorkspaceService } from '@features/editor/services/workspace.service';
 })
 export class SidePanelComponent implements OnInit, OnDestroy {
 
-  private readonly workspace = inject(WorkspaceService);
+  private readonly sidePanelService = inject(SidePanelService);
   private readonly elRef = inject(ElementRef);
 
-  public menuItems: MenuItem[] = [
-    { icon: 'menu-book.png', label: Menu.Manuscrito, options: ['Libro', 'Capítulos'] },
-    { icon: 'menu-history.png', label: Menu.Historia, options: ['Cronología', 'Eventos'] },
-    { icon: 'menu-characters.png', label: Menu.Personajes, options: ['Héroes', 'Villanos'] },
-    { icon: 'menu-locations.png', label: Menu.Localizaciones, options: ['Lugares', 'Mapas'] },
-  ];
-
-  public isOpen = this.workspace.isPanelOpen;
-  public selectedMenu = this.workspace.selectedMenu;
-  public selectedOption = this.workspace.selectedOption;
-  public activeMenu = this.workspace.activeMenu;
+  public menuItems = this.sidePanelService.menuItems;
+  public isOpen = this.sidePanelService.isPanelOpen;
+  public selectedMenu = this.sidePanelService.selectedMenu;
+  public selectedOption = this.sidePanelService.selectedOption;
+  public activeMenu = this.sidePanelService.activeMenu;
 
   public ngOnInit(): void {
     document.addEventListener('click', this.handleClickOutside, true);
+    console.log(this.isOpen())
   }
 
   private handleClickOutside = (event: MouseEvent) => {
     const clickedInside = this.elRef.nativeElement.contains(event.target);
     if (!clickedInside && this.isOpen()) {
-      this.workspace.togglePanel();
+      this.sidePanelService.togglePanel();
     }
   };
 
   public togglePanel(): void {
-    this.workspace.togglePanel();
+    this.sidePanelService.togglePanel();
   }
 
   public selectMenu(menu: MenuItem): void {
-    this.workspace.selectMenu(menu);
+    this.sidePanelService.selectMenu(menu);
   }
 
   public selectOption(menuLabel: Menu | undefined, option: string, icon: string): void {
     if (menuLabel) {
-      this.workspace.selectOption(menuLabel, option, icon);
+      this.sidePanelService.selectOption(menuLabel, option, icon);
     }
   }
 
