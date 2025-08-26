@@ -1,0 +1,19 @@
+.app-container {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "content";
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  height: 100vh; 
+}
+
+app-header {
+  grid-area: header;
+}
+
+.content-area {
+  grid-area: content;
+    min-height: 0;
+  overflow: hidden;
+}

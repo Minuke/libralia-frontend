@@ -1,6 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { Menu } from '../entities/enums/menu.enum';
-import { OptionSelected, MenuItem } from '../entities/interfaces/side-panel.interface';
+import { Injectable, signal, computed } from "@angular/core";
+import { Menu } from "../entities/enums/menu.enum";
+import { MenuItem, OptionSelected } from "../entities/interfaces/side-panel.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +26,14 @@ export class WorkspaceService {
     if (!newState) {
       this.activeMenu.set(this.selectedOption().menu);
       this.selectedMenu.set(null);
-    } else if (!this.selectedMenu() && this.selectedOption()) {
-      this.selectedMenu.set({
-        label: this.selectedOption().menu,
-        icon: this.selectedOption().icon,
-        options: []
-      });
+    } else {
+      if (!this.selectedMenu()) {
+        this.selectedMenu.set({
+          label: this.selectedOption().menu,
+          icon: this.selectedOption().icon,
+          options: []
+        });
+      }
     }
   }
 
