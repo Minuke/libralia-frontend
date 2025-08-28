@@ -16,14 +16,14 @@ export class TextEditorComponent {
   private readonly fb = inject(FormBuilder);
 
   public editorForm!: FormGroup;
-  public blog = signal<Blog>({ title: '', contento: new Delta() });
-  public htmlcontento = signal<string>('');
+  public blog = signal<Blog>({ title: '', editor: new Delta() });
+  public htmleditor = signal<string>('');
   public deltaContent = signal<Delta | null>(null);
 
   public ngOnInit(): void {
     this.editorForm = this.fb.group({
       title: ['', [Validators.required]],
-      contento: ['', [Validators.required]],
+      editor: ['', [Validators.required]],
     });
   }
 
@@ -36,7 +36,7 @@ export class TextEditorComponent {
     if (this.editorForm.valid && delta) {
       const editor: Blog = {
         title: this.editorForm.value.title,
-        contento: delta
+        editor: delta
       };
       console.log('Editor guardado:', editor);
     } else {

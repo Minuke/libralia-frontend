@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Blog Formateado",
-    "contento": {
+    "editor": {
       "ops": [
         { "insert": "Título de prueba", "attributes": { "header": 1 } },
         { "insert": "\n" },
@@ -18,7 +18,7 @@
   {
     "id": 2,
     "title": "Blog con Lista",
-    "contento": {
+    "editor": {
       "ops": [
         { "insert": "Elemento 1" },
         { "insert": "\n", "attributes": { "list": "ordered" } },
@@ -32,7 +32,7 @@
   {
     "id": 3,
     "title": "Blog Simple",
-    "contento": {
+    "editor": {
       "ops": [
         { "insert": "Este es un blog simple sin formato.\n" }
       ]
@@ -41,7 +41,7 @@
   {
     "id": 4,
     "title": "Blog con Imagen",
-    "contento": {
+    "editor": {
       "ops": [
         { "insert": "Mira esta imagen:\n" },
         { "insert": { "image": "https://picsum.photos/id/1011/400/200" } },

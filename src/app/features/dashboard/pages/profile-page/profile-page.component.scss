@@ -1,9 +1,9 @@
-.profile-container {
+.profile-page {
+  display: grid;
+  width: 100%;
+  height: 100%;
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: 'Segoe UI', system-ui, -apple-system, "Helvetica Neue", Arial;
-  color: #222;
-  display: grid;
-  gap: 1.75rem;
+  gap: 1rem;
 }

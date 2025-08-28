@@ -1,16 +1,22 @@
 <form class="editor-form" (ngSubmit)="editor()" [formGroup]="editorForm">
+
   <div class="editor-form__group editor-form__group--title">
     <label for="title" class="editor-form__label">Titulo:</label>
-    <input type="text" id="title" class="editor-form__input" placeholder="Titulo" name="title" formControlName="title"
-      required />
+    <input type="text" id="title" class="editor-form__input" placeholder="Titulo" name="title" formControlName="title" required />
     <app-input-errors [control]="editorForm.get('title')"></app-input-errors>
   </div>
-  <div>
-    <quill-editor class="editor-form__group editor-form__group--contento" formControlName="contento"
-      [modules]="modulesQuill" (onContentChanged)="onChangeEditor($event)"></quill-editor>
-    <app-input-errors [control]="editorForm.get('contento')"></app-input-errors>
+
+  <quill-editor 
+    class="editor-form__group editor-form__group--editor" 
+    formControlName="editor"
+    [modules]="modulesQuill" 
+    (onContentChanged)="onChangeEditor($event)">
+  </quill-editor>
+  <div class="editor-form__group"> <app-input-errors [control]="editorForm.get('editor')"></app-input-errors>
   </div>
+
   <div class="editor-form__actions">
     <button class="editor-form__button" [disabled]="editorForm.invalid">Guardar</button>
   </div>
+
 </form>
