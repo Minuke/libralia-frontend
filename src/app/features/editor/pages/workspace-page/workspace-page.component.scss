@@ -1,8 +1,8 @@
-
 :host {
   display: block;
   height: 100%;
 }
+
 .workspace-page {
   display: grid;
   grid-template-areas: "aside form";
@@ -29,6 +29,8 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .workspace-page app-side-panel {
