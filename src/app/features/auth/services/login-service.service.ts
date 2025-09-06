@@ -39,13 +39,7 @@ export class LoginService {
       tap((response) => {
         this.setSession(response.user, response.access, response.refresh);
       }),
-      map(() => true),
-      catchError((err) => {
-        console.error('Login error', err);
-        this.logout();
-        return of(false);
-      })
-    );
+    )
   }
 
   public refreshToken() {

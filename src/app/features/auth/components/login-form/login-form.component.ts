@@ -53,12 +53,12 @@ export class LoginFormComponent {
         this.loading.set(false);
         if (success) {
           this.router.navigate(['/dashboard/profile']);
-          this.error.set('Usuario o contraseña incorrectos');
         }
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set(err?.message || 'Error inesperado. Inténtalo de nuevo.');
+        this.error.set('Usuario o contraseña incorrectos');
+        console.error('Login error:', err.message);
       },
     });
   }
