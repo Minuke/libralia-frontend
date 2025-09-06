@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { User } from '@shared/entities/interfaces/user.interface';
+import { UserDetails } from '@shared/entities/interfaces/user.interface';
 
 @Component({
   selector: 'app-data-user',
@@ -10,5 +10,5 @@ import { User } from '@shared/entities/interfaces/user.interface';
   styleUrl: './data-user.component.scss'
 })
 export class DataUserComponent {
-  public user = input.required<User>();
+  public user = input.required<UserDetails>();
 }

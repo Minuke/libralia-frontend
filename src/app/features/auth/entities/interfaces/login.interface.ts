@@ -1,9 +1,13 @@
-export interface LoginUsernameParams {
-	password: string;
-	username: string;
+import { UserDetails } from "@shared/entities/interfaces/user.interface";
+
+export interface Login {
+  username?: string;
+  email?: string;
+  password: string;
 }
 
-export interface LoginEmailParams {
-	password: string;
-	email: string;
+export interface JWT {
+  access: string;
+  refresh: string;
+  user: UserDetails;
 }

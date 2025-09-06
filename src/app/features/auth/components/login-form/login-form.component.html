@@ -24,11 +24,24 @@
   </div>
 
   <div class="login-form__actions">
-    <button class="login-form__button" [disabled]="loginForm.invalid">Iniciar sesión</button>
+    <button class="login-form__button" [disabled]="loginForm.invalid || loading()">Iniciar sesión</button>
   </div>
 
   <div class="login-form__links">
     <a class="login-form__link" routerLink="/auth/forgot-password">Olvidé mi contraseña</a>
     <a class="login-form__link" routerLink="/auth/register">Crear cuenta</a>
   </div>
+
+  @if (error()) {
+  <div class="login-form__error">
+    {{ error() }}
+  </div>
+  }
+
+  @if (loading()) {
+  <div class="login-form__loading">
+    Cargando...
+  </div>
+  }
+
 </form>

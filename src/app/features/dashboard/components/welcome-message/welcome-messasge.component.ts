@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { User } from '@shared/entities/interfaces/user.interface';
+import { UserDetails } from '@shared/entities/interfaces/user.interface';
 
 @Component({
   selector: 'app-welcome-message',
@@ -8,5 +8,5 @@ import { User } from '@shared/entities/interfaces/user.interface';
   styleUrl: './welcome-message.component.scss'
 })
 export class WelcomeMessageComponent {
-  public user = input.required<User>();
+  public user = input.required<UserDetails>();
 }

@@ -21,7 +21,7 @@ export class ProfilePageComponent {
 
   // Computed reactivo que obtiene los libros del BooksService por userId
   public readonly userBooks = computed(() => {
-    const userId = this.currentUser()!.id;
+    const userId = this.currentUser()!.pk;
     return this.booksService.getBooksByAuthor(userId);
   });
 }

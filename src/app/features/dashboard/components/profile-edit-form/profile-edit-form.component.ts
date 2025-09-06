@@ -2,7 +2,7 @@ import { Component, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
-import { User } from '@shared/entities/interfaces/user.interface';
+import { UserDetails } from '@shared/entities/interfaces/user.interface';
 import { UsersService } from '@shared/services/users-service.service';
 import { LoginService } from '@features/auth/services/login-service.service';
 
@@ -19,7 +19,7 @@ export class ProfileEditFormComponent {
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
 
-  public user = input.required<User>();
+  public user = input.required<UserDetails>();
 
   public profileEditForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
@@ -34,13 +34,12 @@ export class ProfileEditFormComponent {
 
   public profileEdit(): void {
     if (this.profileEditForm.valid) {
-      const updatedUser: User = {
+      const updatedUser: UserDetails = {
         ...this.user(),
         username: this.profileEditForm.value.username,
         email: this.profileEditForm.value.correo
       };
       this.usersService.updateUser(updatedUser);
-      this.loginService.setCurrentUser(updatedUser);
       console.log('✅ Perfil actualizado:', updatedUser);
       this.router.navigate(['/dashboard/profile']);
     } else {

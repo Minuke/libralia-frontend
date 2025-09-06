@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LoginEmailParams, LoginUsernameParams } from '@features/auth/entities/interfaces/login.interface';
+import { Login } from '@features/auth/entities/interfaces/login.interface';
 import { LoginService } from '@features/auth/services/login-service.service';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 
@@ -18,6 +18,9 @@ export class LoginFormComponent {
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
 
+  public readonly loading = signal(false);
+  public readonly error = signal<string | null>(null);
+
   public loginForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
 
@@ -29,28 +32,35 @@ export class LoginFormComponent {
   }
 
   public login(): void {
-    if (this.loginForm.valid) {
-      const { usernameOrEmail, password } = this.loginForm.value;
-      let login: LoginEmailParams | LoginUsernameParams;
-
-      if (this.isEmail(usernameOrEmail)) {
-        login = { email: usernameOrEmail, password };
-        console.log("Login con email:", login);
-      } else {
-        login = { username: usernameOrEmail, password };
-        console.log("Login con username:", login);
-      }
-      const valid = this.loginService.login(login);
-      if (valid) {
-        console.log('✅ Login correcto');
-        this.router.navigate(['/dashboard/profile']);
-      } else {
-        console.error('❌ Usuario o contraseña incorrectos');
-      }
-    } else {
+    if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-      console.error("Formulario inválido");
+      this.error.set('Formulario inválido');
+      return;
     }
+
+    this.error.set(null);
+    this.loading.set(true);
+    const { usernameOrEmail, password } = this.loginForm.value;
+    let loginPayload: Login;
+    if (this.isEmail(usernameOrEmail)) {
+      loginPayload = { email: usernameOrEmail, password };
+    } else {
+      loginPayload = { username: usernameOrEmail, password };
+    }
+
+    this.loginService.login(loginPayload).subscribe({
+      next: (success) => {
+        this.loading.set(false);
+        if (success) {
+          this.router.navigate(['/dashboard/profile']);
+          this.error.set('Usuario o contraseña incorrectos');
+        }
+      },
+      error: (err) => {
+        this.loading.set(false);
+        this.error.set(err?.message || 'Error inesperado. Inténtalo de nuevo.');
+      },
+    });
   }
 
   private isEmail(value: string): boolean {

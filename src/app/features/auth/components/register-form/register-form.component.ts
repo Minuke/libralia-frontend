@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { RegisterParams } from '@features/auth/entities/interfaces/register.interface';
 import { LoginService } from '@features/auth/services/login-service.service';
-import { RegisterService } from '@features/auth/services/register-service.service';
+import { RegisterService } from '@features/auth/services/register.service';
 import { forbiddenWordsValidator } from '@features/auth/validators/forbidden-words.validator';
 import { matchingPasswordsValidator } from '@features/auth/validators/matching-passwords.validator';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
@@ -44,7 +44,7 @@ export class RegisterFormComponent {
 
       if (newUser) {
         console.log('✅ Registro exitoso');
-        this.loginService.setCurrentUser(newUser);
+        // this.loginService.setCurrentUser(newUser);
         this.router.navigate(['/dashboard/profile']);
       }
     } else {

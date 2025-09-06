@@ -1,8 +1,9 @@
-export interface User {
-  id: number;
+export interface UserDetails {
+  pk: number;
   username: string;
   email: string;
-  password: string;
+  first_name?: string;
+  last_name?: string;
 }
 
 export interface ProfileEditParams {

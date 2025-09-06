@@ -1,54 +1,98 @@
 import { inject, Injectable, signal, computed } from '@angular/core';
-import { UsersService } from '@shared/services/users-service.service';
 import { StorageService } from '@core/services/storage.service';
-import { User } from '@shared/entities/interfaces/user.interface';
-import { LoginEmailParams, LoginUsernameParams } from '../entities/interfaces/login.interface';
+import { tap, map, catchError, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { UserDetails } from '@shared/entities/interfaces/user.interface';
+import { environment } from 'environments/environment.development';
+import { JWT, Login } from '../entities/interfaces/login.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class LoginService {
-  private readonly usersService = inject(UsersService);
+  private readonly http = inject(HttpClient);
   private readonly storageService = inject(StorageService);
 
-  private readonly currentUserSignal = signal<User | null>(null);
+  private readonly currentUserSignal = signal<UserDetails | null>(null);
+  private readonly accessTokenSignal = signal<string | null>(null);
+  private readonly refreshTokenSignal = signal<string | null>(null);
 
   public readonly currentUser = computed(() => this.currentUserSignal());
   public readonly isAuthenticated = computed(() => this.currentUserSignal() !== null);
 
   constructor() {
     const storedUser = this.storageService.getUser();
-    if (storedUser) {
+    const storedAccess = this.storageService.getAccessToken();
+    const storedRefresh = this.storageService.getRefreshToken();
+
+
+    if (storedUser && storedAccess) {
       this.currentUserSignal.set(storedUser);
+      this.accessTokenSignal.set(storedAccess);
+      this.refreshTokenSignal.set(storedRefresh);
     }
   }
 
-  public login(params: LoginEmailParams | LoginUsernameParams): boolean {
-    let user: User | undefined;
+  public login(params: Login) {
+    return this.http.post<JWT>(`${environment.apiUrl}/auth/login/`, params).pipe(
+      tap((response) => {
+        this.setSession(response.user, response.access, response.refresh);
+      }),
+      map(() => true),
+      catchError((err) => {
+        console.error('Login error', err);
+        this.logout();
+        return of(false);
+      })
+    );
+  }
 
-    if ('email' in params) {
-      user = this.usersService.findByEmail(params.email);
-    } else {
-      user = this.usersService.findByUsername(params.username);
-    }
+  public refreshToken() {
+    const refresh = this.getRefreshToken();
+    if (!refresh) return of(null);
 
-    if (user && user.password === params.password) {
-      this.setCurrentUser(user);
-      return true;
-    }
-
-    this.logout();
-    return false;
+    return this.http.post<{ access: string }>(`${environment.apiUrl}/auth/refresh/`, { refresh }).pipe(
+      tap((response) => {
+        if (response.access) {
+          this.accessTokenSignal.set(response.access);
+          this.storageService.setAccessToken(response.access);
+        }
+      }),
+      map((response) => response.access ?? null),
+      catchError((err) => {
+        console.error('Refresh token failed', err);
+        this.logout();
+        return of(null);
+      })
+    );
   }
 
   public logout(): void {
     this.currentUserSignal.set(null);
+    this.accessTokenSignal.set(null);
+    this.refreshTokenSignal.set(null);
     this.storageService.clearUser();
+    this.storageService.clearAccessToken();
+    this.storageService.clearRefreshToken();
   }
 
-  public setCurrentUser(user: User): void {
+
+  private setSession(user: UserDetails, access: string, refresh: string): void {
     this.currentUserSignal.set(user);
+    this.accessTokenSignal.set(access);
+    this.refreshTokenSignal.set(refresh);
     this.storageService.setUser(user);
+    this.storageService.setAccessToken(access);
+    this.storageService.setRefreshToken(refresh);
+  }
+
+
+  public getAccessToken(): string | null {
+    return this.accessTokenSignal();
+  }
+
+  public getRefreshToken(): string | null {
+    return this.refreshTokenSignal();
   }
 }

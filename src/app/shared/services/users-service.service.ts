@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { User } from '@shared/entities/interfaces/user.interface';
+import { UserDetails } from '@shared/entities/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { User } from '@shared/entities/interfaces/user.interface';
 export class UsersService {
   private readonly http = inject(HttpClient);
 
-  private readonly usersSignal = signal<User[]>([]);
+  private readonly usersSignal = signal<UserDetails[]>([]);
   public readonly users = computed(() => this.usersSignal());
 
   constructor() {
@@ -18,19 +18,19 @@ export class UsersService {
 
   /** Carga inicial de usuarios desde mock/API */
   private loadUsers(): void {
-    this.http.get<User[]>('./mocks/users.json').subscribe({
+    this.http.get<UserDetails[]>('./mocks/users.json').subscribe({
       next: data => this.usersSignal.set(data),
       error: err => console.error('Error loading users:', err)
     });
   }
 
   /** Añadir un nuevo usuario */
-  public addUser(user: User): void {
+  public addUser(user: UserDetails): void {
     this.usersSignal.update(users => [...users, user]);
   }
 
   /** Actualizar datos de un usuario existente */
-  public updateUser(updated: User): void {
+  public updateUser(updated: UserDetails): void {
     this.usersSignal.update(users =>
       users.map(u =>
         u.email.toLowerCase() === updated.email.toLowerCase()
@@ -41,14 +41,14 @@ export class UsersService {
   }
 
   /** Buscar usuario por email */
-  public findByEmail(email: string): User | undefined {
+  public findByEmail(email: string): UserDetails | undefined {
     return this.usersSignal().find(
       u => u.email.toLowerCase() === email.toLowerCase()
     );
   }
 
   /** Buscar usuario por username */
-  public findByUsername(username: string): User | undefined {
+  public findByUsername(username: string): UserDetails | undefined {
     return this.usersSignal().find(
       u => u.username.toLowerCase() === username.toLowerCase()
     );
