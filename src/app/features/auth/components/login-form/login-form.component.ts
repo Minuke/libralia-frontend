@@ -40,6 +40,7 @@ export class LoginFormComponent {
 
     this.error.set(null);
     this.loading.set(true);
+    
     const { usernameOrEmail, password } = this.loginForm.value;
     let loginPayload: Login;
     if (this.isEmail(usernameOrEmail)) {

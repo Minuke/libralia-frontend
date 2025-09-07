@@ -58,10 +58,8 @@
 		cursor: pointer;
 	}
 
-	/* --- Mensaje de error --- */
 	&__error {
 		color: #dc3545;
-		/* rojo bootstrap-like */
 		background-color: #f8d7da;
 		border: 1px solid #f5c2c7;
 		border-radius: 4px;
@@ -70,10 +68,8 @@
 		margin-bottom: 10px;
 	}
 
-	/* --- Mensaje de loading --- */
 	&__loading {
 		color: #0d6efd;
-		/* azul bootstrap-like */
 		background-color: #cfe2ff;
 		border: 1px solid #9ec5fe;
 		border-radius: 4px;

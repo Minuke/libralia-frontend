@@ -12,23 +12,23 @@ export class BooksService {
   private readonly booksSignal = signal<Book[]>([]);
   public readonly books = computed(() => this.booksSignal());
 
-  constructor() {
-    this.loadBooks();
-  }
+  // constructor() {
+  //   this.loadBooks();
+  // }
 
-  private loadBooks(): void {
-    this.http.get<Book[]>('./mocks/books.json').subscribe({
-      next: data => this.booksSignal.set(data),
-      error: err => console.error('Error loading books:', err)
-    });
-  }
+  // private loadBooks(): void {
+  //   this.http.get<Book[]>('./mocks/books.json').subscribe({
+  //     next: data => this.booksSignal.set(data),
+  //     error: err => console.error('Error loading books:', err)
+  //   });
+  // }
 
-  public addBook(book: Book): void {
-    this.booksSignal.update(books => [...books, book]);
-  }
+  // public addBook(book: Book): void {
+  //   this.booksSignal.update(books => [...books, book]);
+  // }
 
-  public getBooksByAuthor(authorId: number): Book[] {
-    return this.booksSignal().filter(book => book.authorId === authorId);
-  }
+  // public getBooksByAuthor(authorId: number): Book[] {
+  //   return this.booksSignal().filter(book => book.authorId === authorId);
+  // }
   
 }

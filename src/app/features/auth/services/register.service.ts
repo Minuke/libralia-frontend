@@ -1,27 +1,30 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { UsersService } from '@shared/services/users-service.service';
+import { StorageService } from '@core/services/storage.service';
 import { UserDetails } from '@shared/entities/interfaces/user.interface';
-import { RegisterParams } from '../entities/interfaces/register.interface';
+import { environment } from 'environments/environment.development';
+import { tap } from 'rxjs';
+import { JWT } from '../entities/interfaces/login.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class RegisterService {
-  private readonly usersService = inject(UsersService);
+  private readonly http = inject(HttpClient);
+  private readonly storageService = inject(StorageService);
 
-  public register(params: RegisterParams): UserDetails | null {
-    const exists = this.usersService.findByEmail(params.email);
-    if (exists) return null;
-
-    // const newUser: UserDetails = {
-    //   id: Date.now(),
-    //   username: params.username,
-    //   email: params.email,
-    //   password: params.password1
-    // };
-
-    // this.usersService.addUser(newUser);
-    return null;
+  public register(params: JWT) {
+    return this.http.post<JWT>(`${environment.apiUrl}/auth/register/`, params).pipe(
+      tap((response) => {
+        this.setSession(response.user, response.access, response.refresh);
+      }),
+    );
   }
+
+  private setSession(user: UserDetails, access: string, refresh: string): void {
+    this.storageService.setUser(user);
+    this.storageService.setAccessToken(access);
+    this.storageService.setRefreshToken(refresh);
+  }
+
 }

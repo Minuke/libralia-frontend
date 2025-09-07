@@ -47,4 +47,17 @@
 	<div class="register-form__actions">
 		<button class="register-form__button" [disabled]="registerForm.invalid">Registro</button>
 	</div>
+
+	@if (error()) {
+	<div class="login-form__error">
+		{{ error() }}
+	</div>
+	}
+
+	@if (loading()) {
+	<div class="login-form__loading">
+		Cargando...
+	</div>
+	}
+
 </form>

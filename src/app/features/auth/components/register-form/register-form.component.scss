@@ -82,10 +82,18 @@
 		cursor: pointer;
 	}
 
+	&__loading {
+		color: #555;
+		font-size: 14px;
+		text-align: center;
+		margin-top: 10px;
+	}
+
 	&__error {
 		color: red;
 		font-size: 14px;
-		margin-top: 5px;
+		text-align: center;
+		margin-top: 10px;
 	}
 
 	&__button {
