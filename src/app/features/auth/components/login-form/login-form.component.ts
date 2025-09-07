@@ -4,11 +4,12 @@ import { Router, RouterLink } from '@angular/router';
 import { Login } from '@features/auth/entities/interfaces/login.interface';
 import { LoginService } from '@features/auth/services/login-service.service';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
+import { GoogleLoginComponent } from '../google-login/google-login.component';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputErrorsComponent, RouterLink],
+  imports: [ReactiveFormsModule, InputErrorsComponent, RouterLink, GoogleLoginComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })

@@ -36,12 +36,7 @@
     <span>o</span>
   </div>
 
-  <div class="login-form__google">
-    <button type="button" class="login-form__google-button">
-      <img src="./images/google.svg" alt="Google" class="login-form__google-icon" />
-      <span>Iniciar sesión con Google</span>
-    </button>
-  </div>
+  <app-google-login></app-google-login>
 
   @if (error()) {
   <div class="login-form__error">
