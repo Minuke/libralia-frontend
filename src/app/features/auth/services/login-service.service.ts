@@ -62,7 +62,20 @@ export class LoginService {
     );
   }
 
-  public logout(): void {
+  public logout() {
+    return this.http.post<{detail: string }>(`${environment.apiUrl}/auth/logout/`, {}).pipe(
+      tap(() => {
+        this.localLogout();
+      }),
+      catchError((err) => { 
+        console.error('Logout error:', err.message);
+        this.localLogout();
+        return of(null);
+      })
+    );
+  }
+
+  public localLogout(): void {
     this.currentUserSignal.set(null);
     this.accessTokenSignal.set(null);
     this.refreshTokenSignal.set(null);

@@ -16,8 +16,11 @@ export class HeaderComponent {
   public readonly currentUser = this.loginService.currentUser;
 
   public logout(): void {
-    this.loginService.logout();
-    this.router.navigate(['/auth/login']);
+    this.loginService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/auth/login']);
+      }
+    });
   }
 
 }
