@@ -2,10 +2,10 @@ import { Component, input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-input-errors',
-  imports: [],
-  templateUrl: './input-errors.component.html',
-  styleUrl: './input-errors.component.scss'
+	selector: 'app-input-errors',
+	imports: [],
+	templateUrl: './input-errors.component.html',
+	styleUrl: './input-errors.component.scss'
 })
 export class InputErrorsComponent {
 	public control = input.required<AbstractControl | null>();
@@ -38,6 +38,22 @@ export class InputErrorsComponent {
 		if (ctrl.errors["passwordMismatch"]) {
 			return "Las contraseñas no coinciden";
 		}
+		if (ctrl.errors["numericOnly"]) {
+			return "La contraseña no puede ser solo números";
+		}
+		if (ctrl.errors["missingUppercase"]) {
+			return "Debe contener al menos una letra mayúscula";
+		}
+		if (ctrl.errors["missingLowercase"]) {
+			return "Debe contener al menos una letra minúscula";
+		}
+		if (ctrl.errors["missingDigit"]) {
+			return "Debe contener al menos un número";
+		}
+		if (ctrl.errors["missingSpecial"]) {
+			return "Debe contener al menos un carácter especial";
+		}
+
 		return null;
 	}
 }

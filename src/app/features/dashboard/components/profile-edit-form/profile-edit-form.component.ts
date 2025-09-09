@@ -39,7 +39,7 @@ export class ProfileEditFormComponent {
         username: this.profileEditForm.value.username,
         email: this.profileEditForm.value.correo
       };
-      this.usersService.updateUser(updatedUser);
+      //this.usersService.updateUser(updatedUser);
       console.log('✅ Perfil actualizado:', updatedUser);
       this.router.navigate(['/dashboard/profile']);
     } else {

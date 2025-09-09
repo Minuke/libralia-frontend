@@ -1,4 +1,4 @@
-.profile-edit-page {
+.edit-user-page {
   display: grid;
   width: 100%;
   height: 100%;
@@ -13,11 +13,11 @@
   gap: 1rem;
 }
 
-.profile-edit-page__title {
+.edit-user-page__title {
   grid-area: title;
   text-align: center;
 }
 
-.profile-edit-page app-profile-edit-form {
+.edit-user-page app-profile-edit-form {
   grid-area: form;
 }

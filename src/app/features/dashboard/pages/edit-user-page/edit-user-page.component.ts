@@ -3,12 +3,12 @@ import { LoginService } from '@features/auth/services/login-service.service';
 import { ProfileEditFormComponent } from '@features/dashboard/components/profile-edit-form/profile-edit-form.component';
 
 @Component({
-  selector: 'app-profile-edit-page',
+  selector: 'app-edit-user-page',
   imports: [ProfileEditFormComponent],
-  templateUrl: './profile-edit-page.component.html',
-  styleUrl: './profile-edit-page.component.scss'
+  templateUrl: './edit-user-page.component.html',
+  styleUrl: './edit-user-page.component.scss'
 })
-export class ProfileEditPageComponent {
+export class EditUserPageComponent {
   private readonly loginService = inject(LoginService);
 
   public readonly currentUser = this.loginService.currentUser;

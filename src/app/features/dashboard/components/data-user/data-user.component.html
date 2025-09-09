@@ -1,6 +1,13 @@
 <div class="user-info-card">
   <h2 class="user-info__title">📌 Tus datos</h2>
-  <p class="user-info__line"><strong>Nombre de usuario:</strong> {{ user().username }}</p>
-  <p class="user-info__line"><strong>Email:</strong> {{ user().email }}</p>
-  <button class="btn btn-secondary" routerLink="/dashboard/profile-edit">✏️ Editar perfil</button>
+
+  <div class="user-info__data">
+    <p><span>👤</span> {{ user().username }}</p>
+    <p><span>📧</span> {{ user().email }}</p>
+  </div>
+
+  <div class="user-info__actions">
+    <button class="btn btn-primary" routerLink="/dashboard/profile-edit">✏️ Editar perfil</button>
+    <button class="btn btn-accent" routerLink="/dashboard/password-change">🔒 Cambiar contraseña</button>
+  </div>
 </div>

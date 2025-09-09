@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { JWT } from '@features/auth/entities/interfaces/login.interface';
 import { RegisterService } from '@features/auth/services/register.service';
 import { forbiddenWordsValidator } from '@features/auth/validators/forbidden-words.validator';
-import { matchingPasswordsValidator } from '@features/auth/validators/matching-passwords.validator';
+import { matchingPasswordsValidator } from '@shared/validators/matching-passwords.validator';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
-
+import { notNumericOnlyValidator } from '@shared/validators/not-numeric-only.validator';
+import { passwordComplexityValidator } from '@shared/validators/password-complexity.validator';
 @Component({
   selector: 'app-register-form',
   standalone: true,
@@ -30,8 +31,8 @@ export class RegisterFormComponent {
       {
         username: ["", [Validators.required, forbiddenWordsValidator(["root", "superuser", "admin"])]],
         email: ["", [Validators.required, Validators.email]],
-        password1: ["", [Validators.required, Validators.minLength(8)]],
-        password2: ["", [Validators.required, Validators.minLength(8)]]
+        password1: ["", [Validators.required, Validators.minLength(8), notNumericOnlyValidator, passwordComplexityValidator]],
+        password2: ["", [Validators.required, Validators.minLength(8), notNumericOnlyValidator, passwordComplexityValidator]]
       },
       { validators: matchingPasswordsValidator }
     );

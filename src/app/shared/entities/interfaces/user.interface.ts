@@ -6,6 +6,11 @@ export interface UserDetails {
   last_name?: string;
 }
 
+export interface PasswordChange {
+  new_password1: string;
+  new_password2: string;
+}
+
 export interface ProfileEditParams {
   username?: string;
   email?: string;
