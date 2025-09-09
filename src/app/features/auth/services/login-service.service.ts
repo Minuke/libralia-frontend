@@ -46,7 +46,7 @@ export class LoginService {
     const refresh = this.getRefreshToken();
     if (!refresh) return of(null);
 
-    return this.http.post<{ access: string }>(`${environment.apiUrl}/auth/refresh/`, { refresh }).pipe(
+    return this.http.post<{ access: string }>(`${environment.apiUrl}/auth/token/refresh/`, { refresh }).pipe(
       tap((response) => {
         if (response.access) {
           this.accessTokenSignal.set(response.access);
