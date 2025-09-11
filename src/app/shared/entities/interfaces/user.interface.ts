@@ -11,6 +11,10 @@ export interface PasswordChange {
   new_password2: string;
 }
 
+export interface PasswordReset {
+  email: string;
+}
+
 export interface ProfileEditParams {
   username?: string;
   email?: string;

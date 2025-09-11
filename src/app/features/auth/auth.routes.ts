@@ -3,10 +3,12 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
 import { isAuthenticated } from '@shared/guards/is-authenticated.guard';
+import { PasswordResetPageComponent } from './pages/password-reset-page/password-reset-page.component';
 
 export enum AuthPages {
   LOGIN = "login",
   REGISTER = "register",
+  PASSWORD_RESET = "password-reset",
   NOT_FOUND = "not-found",
 }
 
@@ -18,6 +20,10 @@ export const AUTH_ROUTES: Routes = [
   },
   {
     path: AuthPages.REGISTER, component: RegisterPageComponent, title: 'Register', canActivate: [isAuthenticated],
+    data: { authMode: 'public' }
+  },
+  {
+    path: AuthPages.PASSWORD_RESET, component: PasswordResetPageComponent, title: 'Password Reset', canActivate: [isAuthenticated],
     data: { authMode: 'public' }
   },
   {
