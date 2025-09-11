@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { AuthService } from '@core/services/auth.service';
 import { StorageService } from '@core/services/storage.service';
 import { LoginService } from '@features/auth/services/login-service.service';
 
@@ -14,6 +15,7 @@ export class GoogleCallbackComponent {
   private readonly router = inject(Router);
   private readonly loginService = inject(LoginService);
   private readonly storageService = inject(StorageService);
+  private readonly authService = inject(AuthService);
 
   public ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
@@ -32,7 +34,7 @@ export class GoogleCallbackComponent {
       .subscribe({
         next: (response) => {
           this.storageService.setAccessToken(response.access);
-          this.storageService.setUser(response.user);
+          this.authService.setUser(response.user);
           this.router.navigate(["./dashboard"]);
         },
         error: (err) => {

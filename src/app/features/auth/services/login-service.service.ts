@@ -1,10 +1,11 @@
-import { inject, Injectable, signal, computed } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { StorageService } from '@core/services/storage.service';
 import { tap, map, catchError, of, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { UserDetails } from '@shared/entities/interfaces/user.interface';
 import { environment } from 'environments/environment.development';
 import { JWT, Login } from '../entities/interfaces/login.interface';
+import { AuthService } from '@core/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,26 +13,21 @@ import { JWT, Login } from '../entities/interfaces/login.interface';
 
 export class LoginService {
   private readonly http = inject(HttpClient);
+  private readonly authService = inject(AuthService);
   private readonly storageService = inject(StorageService);
 
-  private readonly currentUserSignal = signal<UserDetails | null>(null);
-  private readonly accessTokenSignal = signal<string | null>(null);
-  private readonly refreshTokenSignal = signal<string | null>(null);
-
-  public readonly currentUser = computed(() => this.currentUserSignal());
-  public readonly isAuthenticated = computed(() => this.currentUserSignal() !== null);
-
   constructor() {
-    const storedUser = this.storageService.getUser();
     const storedAccess = this.storageService.getAccessToken();
     const storedRefresh = this.storageService.getRefreshToken();
 
-
-    if (storedUser && storedAccess) {
-      this.currentUserSignal.set(storedUser);
-      this.accessTokenSignal.set(storedAccess);
-      this.refreshTokenSignal.set(storedRefresh);
+    if (storedAccess) {
+      this.authService.setAccessToken(storedAccess);
+      this.authService.setRefreshToken(storedRefresh);
     }
+  }
+
+  public getStoredAccessToken(): string | null {
+    return this.storageService.getAccessToken();
   }
 
   public login(params: Login) {
@@ -42,14 +38,20 @@ export class LoginService {
     )
   }
 
+  public fetchCurrentUser(): Observable<UserDetails> {
+    return this.http.get<UserDetails>(`${environment.apiUrl}/auth/user/`).pipe(
+      tap(user => this.authService.setUser(user))
+    );
+  }
+
   public refreshToken() {
-    const refresh = this.getRefreshToken();
+    const refresh = this.authService.getRefreshToken();
     if (!refresh) return of(null);
 
     return this.http.post<{ access: string }>(`${environment.apiUrl}/auth/token/refresh/`, { refresh }).pipe(
       tap((response) => {
         if (response.access) {
-          this.accessTokenSignal.set(response.access);
+          this.authService.setAccessToken(response.access);
           this.storageService.setAccessToken(response.access);
         }
       }),
@@ -64,9 +66,7 @@ export class LoginService {
 
   public logout() {
     return this.http.post<{ detail: string }>(`${environment.apiUrl}/auth/logout/`, {}).pipe(
-      tap(() => {
-        this.localLogout();
-      }),
+      tap(() => this.localLogout()),
       catchError((err) => {
         console.error('Logout error:', err.message);
         this.localLogout();
@@ -81,35 +81,21 @@ export class LoginService {
       "Content-Type": "application/x-www-form-urlencoded"
     });
     return this.http
-      .post<any>("http://localhost:8000/api/auth/google/", body.toString(), { headers })
+      .post<JWT>("http://localhost:8000/api/auth/google/", body.toString(), { headers })
       .pipe(tap((response) => console.log("Inicio de sesión exitoso", response)));
   }
 
-  public localLogout(): void {
-    this.currentUserSignal.set(null);
-    this.accessTokenSignal.set(null);
-    this.refreshTokenSignal.set(null);
-    this.storageService.clearUser();
-    this.storageService.clearAccessToken();
-    this.storageService.clearRefreshToken();
-  }
-
-
   private setSession(user: UserDetails, access: string, refresh: string): void {
-    this.currentUserSignal.set(user);
-    this.accessTokenSignal.set(access);
-    this.refreshTokenSignal.set(refresh);
-    this.storageService.setUser(user);
+    this.authService.setUser(user);
+    this.authService.setAccessToken(access);
+    this.authService.setRefreshToken(refresh);
     this.storageService.setAccessToken(access);
     this.storageService.setRefreshToken(refresh);
   }
 
-
-  public getAccessToken(): string | null {
-    return this.accessTokenSignal();
-  }
-
-  public getRefreshToken(): string | null {
-    return this.refreshTokenSignal();
+  public localLogout(): void {
+    this.authService.clear();
+    this.storageService.clearAccessToken();
+    this.storageService.clearRefreshToken();
   }
 }

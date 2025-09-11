@@ -5,6 +5,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { AuthService } from '@core/services/auth.service';
 import { LoginService } from '@features/auth/services/login-service.service';
 import { BehaviorSubject, throwError } from 'rxjs';
 import {
@@ -24,7 +25,8 @@ export const authInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ) => {
   const loginService = inject(LoginService);
-  const accessToken = loginService.getAccessToken();
+  const authService = inject(AuthService);
+  const accessToken = authService.getAccessToken();
 
   // Do not attach token to login/refresh endpoints
   const isAuthRequest =

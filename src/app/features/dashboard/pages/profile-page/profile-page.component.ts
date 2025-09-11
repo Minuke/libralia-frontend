@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { LoginService } from '@features/auth/services/login-service.service';
+import { AuthService } from '@core/services/auth.service';
 import { DataUserComponent } from '@features/dashboard/components/data-user/data-user.component';
 import { WelcomeMessageComponent } from '@features/dashboard/components/welcome-message/welcome-messasge.component';
 
@@ -11,15 +11,9 @@ import { WelcomeMessageComponent } from '@features/dashboard/components/welcome-
   styleUrl: './profile-page.component.scss'
 })
 export class ProfilePageComponent {
-  private readonly loginService = inject(LoginService);
-  // private readonly booksService = inject(BooksService);
+  private readonly authService = inject(AuthService);
 
-  public readonly currentUser = this.loginService.currentUser;
+  public readonly currentUser = this.authService.user!;
   public readonly user = computed(() => this.currentUser()!);
 
-  // Computed reactivo que obtiene los libros del BooksService por userId
-  // public readonly userBooks = computed(() => {
-  //   const userId = this.currentUser()!.pk;
-  //   return this.booksService.getBooksByAuthor(userId);
-  // });
 }

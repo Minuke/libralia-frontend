@@ -1,4 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
+import { AuthService } from '@core/services/auth.service';
 import { LoginService } from '@features/auth/services/login-service.service';
 import { ProfileEditFormComponent } from '@features/dashboard/components/profile-edit-form/profile-edit-form.component';
 
@@ -10,8 +11,9 @@ import { ProfileEditFormComponent } from '@features/dashboard/components/profile
 })
 export class EditUserPageComponent {
   private readonly loginService = inject(LoginService);
+  private readonly authService = inject(AuthService);
 
-  public readonly currentUser = this.loginService.currentUser;
+  public readonly currentUser = this.authService.user;
 
   public readonly user = computed(() => this.currentUser()!);
 }

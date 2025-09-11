@@ -5,6 +5,7 @@ import { UserDetails } from '@shared/entities/interfaces/user.interface';
 import { environment } from 'environments/environment.development';
 import { tap } from 'rxjs';
 import { JWT } from '../entities/interfaces/login.interface';
+import { AuthService } from '@core/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { JWT } from '../entities/interfaces/login.interface';
 export class RegisterService {
   private readonly http = inject(HttpClient);
   private readonly storageService = inject(StorageService);
+  private readonly authService = inject(AuthService);
 
   public register(params: JWT) {
     return this.http.post<JWT>(`${environment.apiUrl}/auth/register/`, params).pipe(
@@ -22,7 +24,7 @@ export class RegisterService {
   }
 
   private setSession(user: UserDetails, access: string, refresh: string): void {
-    this.storageService.setUser(user);
+    this.authService.setUser(user);
     this.storageService.setAccessToken(access);
     this.storageService.setRefreshToken(refresh);
   }

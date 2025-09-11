@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '@core/services/auth.service';
 import { LoginService } from '@features/auth/services/login-service.service';
 
 @Component({
@@ -9,11 +10,12 @@ import { LoginService } from '@features/auth/services/login-service.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  private readonly authService = inject(AuthService);
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
 
-  public readonly isAuthenticated = this.loginService.isAuthenticated;
-  public readonly currentUser = this.loginService.currentUser;
+  public readonly isAuthenticated = this.authService.isAuthenticated;
+  public readonly currentUser = this.authService.user;
 
   public logout(): void {
     this.loginService.logout().subscribe({

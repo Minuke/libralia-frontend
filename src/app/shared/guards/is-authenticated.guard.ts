@@ -1,12 +1,12 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { LoginService } from '@features/auth/services/login-service.service';
+import { AuthService } from '@core/services/auth.service';
 
 export const isAuthenticated: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-  const loginService = inject(LoginService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  const isAuth = loginService.isAuthenticated();
+  const isAuth = authService.isAuthenticated();
   const mode = route.data?.['authMode'] as 'private' | 'public' ?? 'private';
 
   if (mode === 'private') {
