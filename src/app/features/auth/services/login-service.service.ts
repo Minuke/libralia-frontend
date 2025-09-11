@@ -1,7 +1,7 @@
 import { inject, Injectable, signal, computed } from '@angular/core';
 import { StorageService } from '@core/services/storage.service';
-import { tap, map, catchError, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { tap, map, catchError, of, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { UserDetails } from '@shared/entities/interfaces/user.interface';
 import { environment } from 'environments/environment.development';
 import { JWT, Login } from '../entities/interfaces/login.interface';
@@ -63,16 +63,26 @@ export class LoginService {
   }
 
   public logout() {
-    return this.http.post<{detail: string }>(`${environment.apiUrl}/auth/logout/`, {}).pipe(
+    return this.http.post<{ detail: string }>(`${environment.apiUrl}/auth/logout/`, {}).pipe(
       tap(() => {
         this.localLogout();
       }),
-      catchError((err) => { 
+      catchError((err) => {
         console.error('Logout error:', err.message);
         this.localLogout();
         return of(null);
       })
     );
+  }
+
+  public postLoginGoogle(code: string): Observable<JWT> {
+    const body = new HttpParams().set("code", code);
+    const headers = new HttpHeaders({
+      "Content-Type": "application/x-www-form-urlencoded"
+    });
+    return this.http
+      .post<any>("http://localhost:8000/api/auth/google/", body.toString(), { headers })
+      .pipe(tap((response) => console.log("Inicio de sesión exitoso", response)));
   }
 
   public localLogout(): void {

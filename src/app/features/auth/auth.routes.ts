@@ -20,5 +20,10 @@ export const AUTH_ROUTES: Routes = [
     path: AuthPages.REGISTER, component: RegisterPageComponent, title: 'Register', canActivate: [isAuthenticated],
     data: { authMode: 'public' }
   },
+  {
+    path: "google/callback",
+    loadComponent: () =>
+      import("../../features/auth/components/google-callback/google-callback.component").then((c) => c.GoogleCallbackComponent)
+  },
   { path: '**', component: NotFoundComponent, title: 'Page Not Found' }
 ];
