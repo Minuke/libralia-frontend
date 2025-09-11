@@ -50,6 +50,14 @@
   gap: .5rem;
 }
 
+.btn {
+  cursor: pointer;
+  border: none;
+  font-size: 0.9rem;
+  transition: background 0.2s ease, transform 0.1s ease;
+  text-align: center;
+}
+
 .btn-primary {
   background: #007bff;
   color: white;

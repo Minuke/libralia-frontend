@@ -5,8 +5,9 @@
   margin: 0 auto;
   grid-template-areas:
     "welcome"
-    "data";
-  grid-template-rows: auto 1fr;
+    "data"
+    "books";
+  grid-template-rows: auto auto 1fr;
   grid-template-columns: 1fr;
   padding: 2rem;
   gap: 2rem;
@@ -19,4 +20,8 @@
 
 .pofile-page app-data-user {
   grid-area: data;
+}
+
+.pofile-page app-user-books {
+  grid-area: books;
 }
