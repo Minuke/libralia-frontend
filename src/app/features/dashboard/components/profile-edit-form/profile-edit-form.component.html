@@ -18,4 +18,17 @@
       perfil</button>
     <button class="profile-edit-form__button" routerLink="/dashboard/profile">Volver</button>
   </div>
+
+  @if (error()) {
+  <div class="profile-edit-form__error">
+    {{ error() }}
+  </div>
+  }
+
+  @if (loading()) {
+  <div class="profile-edit-form__loading">
+    Cargando...
+  </div>
+  }
+
 </form>

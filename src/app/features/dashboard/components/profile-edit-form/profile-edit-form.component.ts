@@ -2,9 +2,11 @@ import { Component, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
-import { UserDetails } from '@shared/entities/interfaces/user.interface';
+import { PatchedUserDetails, UserDetails } from '@shared/entities/interfaces/user.interface';
 import { UsersService } from '@shared/services/users-service.service';
 import { LoginService } from '@features/auth/services/login-service.service';
+import { take } from 'rxjs';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-profile-edit-form',
@@ -16,13 +18,16 @@ import { LoginService } from '@features/auth/services/login-service.service';
 export class ProfileEditFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly usersService = inject(UsersService);
-  private readonly loginService = inject(LoginService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   public user = input.required<UserDetails>();
 
   public profileEditForm!: FormGroup;
   public mostrarContrasenia = signal<boolean>(false);
+  public loading = signal(false);
+  public error = signal<string | null>(null);
+  public success = signal<string | null>(null);
 
   ngOnInit(): void {
     const current = this.user();
@@ -33,18 +38,35 @@ export class ProfileEditFormComponent {
   }
 
   public profileEdit(): void {
-    if (this.profileEditForm.valid) {
-      const updatedUser: UserDetails = {
-        ...this.user(),
-        username: this.profileEditForm.value.username,
-        email: this.profileEditForm.value.correo
-      };
-      //this.usersService.updateUser(updatedUser);
-      console.log('✅ Perfil actualizado:', updatedUser);
-      this.router.navigate(['/dashboard/profile']);
-    } else {
+    if (this.profileEditForm.invalid) {
       this.profileEditForm.markAllAsTouched();
-      console.error("Formulario inválido");
+      this.error.set('Formulario inválido');
+      return;
     }
+
+    this.loading.set(true);
+    this.error.set(null);
+    this.success.set(null);
+
+    const payload: PatchedUserDetails = {
+      username: this.profileEditForm.value.username,
+      email: this.profileEditForm.value.correo,
+    };
+
+    this.usersService
+      .updateUser(payload)
+      .pipe(take(1))
+      .subscribe({
+        next: (success) => {
+          this.loading.set(false);
+          this.authService.setUser(success);
+          this.router.navigate(['/dashboard/profile']);
+        },
+        error: (err) => {
+          this.loading.set(false);
+          this.error.set('Error al cambiar el perfil');
+          console.error('Profile edit error:', err.message);
+        }
+      });
   }
 }

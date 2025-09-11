@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { PasswordChange, PasswordReset } from '@shared/entities/interfaces/user.interface';
+import { PasswordChange, PasswordReset, PatchedUserDetails, UserDetails } from '@shared/entities/interfaces/user.interface';
 import { environment } from 'environments/environment.development';
 import { Observable } from 'rxjs';
 
@@ -19,5 +19,9 @@ export class UsersService {
   public passwordReset(payload: PasswordReset): Observable<PasswordReset> {
     return this.http
       .post<PasswordReset>(`${environment.apiUrl}/auth/password/reset/`, payload)
+  }
+
+  public updateUser(payload: PatchedUserDetails): Observable<UserDetails> {
+    return this.http.patch<UserDetails>(`${environment.apiUrl}/auth/user/`, payload);
   }
 }

@@ -74,6 +74,28 @@
     margin-top: 0.625rem;
   }
 
+  &__error {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  &__loading {
+    color: #0d6efd;
+    background-color: #cfe2ff;
+    border: 1px solid #9ec5fe;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 500;
+  }
+
   &__button {
     background-color: #007bff;
     color: white;
