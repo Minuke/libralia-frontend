@@ -26,6 +26,11 @@ export class LoginService {
     }
   }
 
+  public restoreSession(access: string, refresh: string) {
+    this.authService.setAccessToken(access);
+    this.authService.setRefreshToken(refresh);
+  }
+
   public getStoredAccessToken(): string | null {
     return this.storageService.getAccessToken();
   }
