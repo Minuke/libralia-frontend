@@ -22,4 +22,8 @@ export class BooksService {
     return this.http.get<PaginatedBookResponse>(`${environment.booksUrl}/`, { params });
   }
 
+  public deleteBook(bookId: string): Observable<void> {
+    return this.http.delete<void>(`${environment.booksUrl}/${bookId}/delete/`);
+  }
+  
 }

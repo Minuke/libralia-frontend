@@ -1,6 +1,5 @@
-<section class="user-books">
-
-  <div class="user-books__top">
+<div class="user-books">
+  <div class="user-books__header">
     <h2 class="user-books__title">📚 Tus libros</h2>
     <button class="user-books__btn user-books__btn--primary" routerLink="/editor/workspace">
       ➕ Nuevo libro
@@ -8,39 +7,48 @@
   </div>
 
   <div class="user-books__list">
-    @if (books()?.results?.length) {
-    @for (book of books()?.results; track book.id) {
-    <article class="user-books__card">
+    @if (books()?.results?.length ?? false) {
+    @for (book of books()!.results; track book.id) {
+    <div class="user-books__card">
       <div class="user-books__details">
         <h3 class="user-books__book-title">{{ book.title }}</h3>
         <p class="user-books__book-description">{{ book.description }}</p>
       </div>
       <div class="user-books__actions">
-        <button class="user-books__btn user-books__btn--edit">Editar</button>
-        <button class="user-books__btn user-books__btn--danger">Eliminar</button>
+        <button class="user-books__btn user-books__btn--edit">
+          Editar
+        </button>
+        <button class="user-books__btn user-books__btn--danger" (click)="deleteBook(book.id)">
+          Eliminar
+        </button>
       </div>
-    </article>
+    </div>
     }
     } @else {
     <p class="user-books__empty">No tienes libros todavía.</p>
     }
   </div>
 
-  @if (books()?.count && (books()?.has_previous || books()?.has_next)) {
+  @if ((books()?.pages ?? 0) > 1) {
   <div class="user-books__pagination">
-    @if (books()?.has_previous) {
-    <button class="user-books__btn user-books__btn--pagination" (click)="goToPrevious()">
+    @if (books()?.has_previous ?? false) {
+    <button class="user-books__btn user-books__btn--secondary" (click)="goToPrevious()">
       ⬅ Anterior
     </button>
     }
-    <span class="user-books__page-info">
-      Página {{ currentPage() }}
-    </span>
-    @if (books()?.has_next) {
-    <button class="user-books__btn user-books__btn--pagination" (click)="goToNext()">
+
+    @for (page of pages(); track page) {
+    <button class="user-books__btn user-books__btn--page" [class.user-books__btn--active]="page === currentPage()"
+      (click)="goToPage(page)">
+      {{ page }}
+    </button>
+    }
+
+    @if (books()?.has_next ?? false) {
+    <button class="user-books__btn user-books__btn--secondary" (click)="goToNext()">
       Siguiente ➡
     </button>
     }
   </div>
   }
-</section>
+</div>
