@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { Book } from '../entities/interfaces/books.interface';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'environments/environment.development';
+import { PaginatedBookResponse } from '../entities/interfaces/books.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +11,15 @@ import { Book } from '../entities/interfaces/books.interface';
 export class BooksService {
   private readonly http = inject(HttpClient);
 
-  private readonly booksSignal = signal<Book[]>([]);
-  public readonly books = computed(() => this.booksSignal());
+  public getBooks(): Observable<PaginatedBookResponse> {
+    return this.http.get<PaginatedBookResponse>(`${environment.booksUrl}/`);
+  }
 
-  // constructor() {
-  //   this.loadBooks();
-  // }
+  public getBooksByAuthor(author: string, page: number = 1) {
+    const params = new HttpParams()
+      .set('search', author)
+      .set('page', page);
+    return this.http.get<PaginatedBookResponse>(`${environment.booksUrl}/`, { params });
+  }
 
-  // private loadBooks(): void {
-  //   this.http.get<Book[]>('./mocks/books.json').subscribe({
-  //     next: data => this.booksSignal.set(data),
-  //     error: err => console.error('Error loading books:', err)
-  //   });
-  // }
-
-  // public addBook(book: Book): void {
-  //   this.booksSignal.update(books => [...books, book]);
-  // }
-
-  // public getBooksByAuthor(authorId: number): Book[] {
-  //   return this.booksSignal().filter(book => book.authorId === authorId);
-  // }
-  
 }

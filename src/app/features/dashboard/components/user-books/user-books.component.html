@@ -1,28 +1,46 @@
-<div class="books-section">
+<section class="user-books">
 
-  <div class="books-header">
-    <h2 class="books-header__title">📚 Tus libros</h2>
-    <button class="btn btn-primary" routerLink="/editor/workspace">➕ Nuevo libro</button>
+  <div class="user-books__top">
+    <h2 class="user-books__title">📚 Tus libros</h2>
+    <button class="user-books__btn user-books__btn--primary" routerLink="/editor/workspace">
+      ➕ Nuevo libro
+    </button>
   </div>
 
-  <div class="books-list">
-    @for (book of userBooks(); track book.title) {
-    <div class="book-card">
-      <img [src]="book.cover" [alt]="book.title" class="book-cover" />
-      <div class="book-details">
-        <h3 class="book-title">{{ book.title }}</h3>
-        <div class="book-actions">
-          <button class="btn btn-secondary">✏️ Editar</button>
-          <button class="btn btn-danger">🗑️ Eliminar</button>
-        </div>
+  <div class="user-books__list">
+    @if (books()?.results?.length) {
+    @for (book of books()?.results; track book.id) {
+    <article class="user-books__card">
+      <div class="user-books__details">
+        <h3 class="user-books__book-title">{{ book.title }}</h3>
+        <p class="user-books__book-description">{{ book.description }}</p>
       </div>
-    </div>
-    } @empty {
-      <p class="empty-message">Aún no tienes libros en tu colección.</p>
+      <div class="user-books__actions">
+        <button class="user-books__btn user-books__btn--edit">Editar</button>
+        <button class="user-books__btn user-books__btn--danger">Eliminar</button>
+      </div>
+    </article>
+    }
+    } @else {
+    <p class="user-books__empty">No tienes libros todavía.</p>
     }
   </div>
 
-
-
-
-</div>
+  @if (books()?.count && (books()?.has_previous || books()?.has_next)) {
+  <div class="user-books__pagination">
+    @if (books()?.has_previous) {
+    <button class="user-books__btn user-books__btn--pagination" (click)="goToPrevious()">
+      ⬅ Anterior
+    </button>
+    }
+    <span class="user-books__page-info">
+      Página {{ currentPage() }}
+    </span>
+    @if (books()?.has_next) {
+    <button class="user-books__btn user-books__btn--pagination" (click)="goToNext()">
+      Siguiente ➡
+    </button>
+    }
+  </div>
+  }
+</section>

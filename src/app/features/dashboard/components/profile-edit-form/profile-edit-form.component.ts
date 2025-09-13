@@ -29,7 +29,7 @@ export class ProfileEditFormComponent {
   public error = signal<string | null>(null);
   public success = signal<string | null>(null);
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const current = this.user();
     this.profileEditForm = this.fb.group({
       username: [current.username, [Validators.required]],

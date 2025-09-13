@@ -10,10 +10,9 @@ import { ProfileEditFormComponent } from '@features/dashboard/components/profile
   styleUrl: './edit-user-page.component.scss'
 })
 export class EditUserPageComponent {
-  private readonly loginService = inject(LoginService);
   private readonly authService = inject(AuthService);
 
   public readonly currentUser = this.authService.user;
-
   public readonly user = computed(() => this.currentUser()!);
+  
 }
