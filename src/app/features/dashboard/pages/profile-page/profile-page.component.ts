@@ -3,12 +3,11 @@ import { DataService } from '@core/services/data.service';
 import { DataUserComponent } from '@features/dashboard/components/data-user/data-user.component';
 import { WelcomeMessageComponent } from '@features/dashboard/components/welcome-message/welcome-messasge.component';
 import { UserBooksComponent } from '../../components/user-books/user-books.component';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile-page',
   standalone: true,
-  imports: [WelcomeMessageComponent, DataUserComponent, UserBooksComponent, CommonModule],
+  imports: [WelcomeMessageComponent, DataUserComponent, UserBooksComponent],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss'
 })

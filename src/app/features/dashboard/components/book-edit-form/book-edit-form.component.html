@@ -1,0 +1,35 @@
+<form class="book-edit-form" (ngSubmit)="bookEdit()" [formGroup]="bookEditForm">
+
+  <div class="book-edit-form__group book-edit-form__group--title">
+    <label for="title" class="book-edit-form__label">Título:</label>
+    <input type="text" id="title" class="book-edit-form__input" placeholder="Título" name="title"
+      formControlName="title" required />
+    <app-input-errors [control]="bookEditForm.get('title')"></app-input-errors>
+  </div>
+
+  <div class="book-edit-form__group book-edit-form__group--description">
+    <label for="description" class="book-edit-form__label">Descripción:</label>
+    <input type="text" id="description" class="book-edit-form__input" placeholder="Descripción" name="description"
+      formControlName="description" required />
+    <app-input-errors [control]="bookEditForm.get('description')"></app-input-errors>
+  </div>
+
+  <div class="book-edit-form__actions">
+    <button class="book-edit-form__button" [disabled]="bookEditForm.invalid || !bookEditForm.dirty">Guardar
+      libro</button>
+    <button class="book-edit-form__button" routerLink="/dashboard/profile">Volver</button>
+  </div>
+
+  @if (error()) {
+  <div class="book-edit-form__error">
+    {{ error() }}
+  </div>
+  }
+
+  @if (loading()) {
+  <div class="book-edit-form__loading">
+    Cargando...
+  </div>
+  }
+
+</form>

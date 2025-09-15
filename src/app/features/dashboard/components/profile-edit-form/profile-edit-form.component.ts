@@ -4,7 +4,6 @@ import { Router, RouterLink } from '@angular/router';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 import { PatchedUserDetails, UserDetails } from '@shared/entities/interfaces/user.interface';
 import { UsersService } from '@shared/services/users-service.service';
-import { LoginService } from '@features/auth/services/login-service.service';
 import { take } from 'rxjs';
 import { AuthService } from '@core/services/auth.service';
 

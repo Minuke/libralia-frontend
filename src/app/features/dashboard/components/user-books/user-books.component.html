@@ -15,7 +15,7 @@
         <p class="user-books__book-description">{{ book.description }}</p>
       </div>
       <div class="user-books__actions">
-        <button class="user-books__btn user-books__btn--edit">
+        <button [routerLink]="['/dashboard/book-edit', book.id]" class="user-books__btn user-books__btn--edit">
           Editar
         </button>
         <button class="user-books__btn user-books__btn--danger" (click)="deleteBook(book.id)">

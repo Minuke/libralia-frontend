@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { SidePanelComponent } from '@features/editor/components/side-panel/side-panel.component';
 import { TextEditorComponent } from '@features/editor/components/text-editor/text-editor.component';
@@ -8,7 +7,7 @@ import { SidePanelService } from '@features/editor/services/side-panel.service';
 
 @Component({
   selector: 'app-workspace-page',
-  imports: [TextEditorComponent, SidePanelComponent, CommonModule, TopicPanelComponent],
+  imports: [TextEditorComponent, SidePanelComponent, TopicPanelComponent],
   templateUrl: './workspace-page.component.html',
   styleUrl: './workspace-page.component.scss'
 })

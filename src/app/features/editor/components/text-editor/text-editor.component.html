@@ -2,14 +2,12 @@
 
   <div class="editor-form__group editor-form__group--title">
     <label for="title" class="editor-form__label">Titulo:</label>
-    <input type="text" id="title" class="editor-form__input" placeholder="Titulo" name="title" formControlName="title" required />
+    <input type="text" id="title" class="editor-form__input" placeholder="Titulo" name="title" formControlName="title"
+      required />
     <app-input-errors [control]="editorForm.get('title')"></app-input-errors>
   </div>
 
-  <quill-editor 
-    class="editor-form__group editor-form__group--editor" 
-    formControlName="editor"
-    [modules]="modulesQuill" 
+  <quill-editor class="editor-form__group editor-form__group--editor" formControlName="editor" [modules]="modulesQuill"
     (onContentChanged)="onChangeEditor($event)">
   </quill-editor>
   <div class="editor-form__group">
@@ -20,8 +18,3 @@
     <button class="editor-form__button" [disabled]="editorForm.invalid">Guardar</button>
   </div>
 </form>
-
-
-<div *ngIf="createdBook() as book" class="success">
-  ✅ Libro creado con ID: {{ book.id }}
-</div>

@@ -53,4 +53,8 @@ export class BooksService {
     });
   }
 
+  public getBookById(id: string): Observable<BookResponse> {
+    return this.http.get<BookResponse>(`${environment.booksUrl}/${id}/`);
+  }
+
 }

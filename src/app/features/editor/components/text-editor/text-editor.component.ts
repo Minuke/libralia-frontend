@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { DataService } from '@core/services/data.service';
 import { BooksService } from '@features/dashboard/services/books.service';
 import { Blog } from '@features/editor/entities/interfaces/blogs.interface';
@@ -11,7 +10,7 @@ import { Delta } from 'quill';
 
 @Component({
   selector: 'app-text-editor',
-  imports: [ReactiveFormsModule, QuillModule, InputErrorsComponent, CommonModule],
+  imports: [ReactiveFormsModule, QuillModule, InputErrorsComponent],
   templateUrl: './text-editor.component.html',
   styleUrl: './text-editor.component.scss'
 })

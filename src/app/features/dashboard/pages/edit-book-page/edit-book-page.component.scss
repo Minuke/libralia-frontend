@@ -1,0 +1,23 @@
+.edit-book-page {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  grid-template-areas:
+    "title"
+    "form";
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.edit-book-page__title {
+  grid-area: title;
+  text-align: center;
+}
+
+.edit-book-page app-book-edit-form {
+  grid-area: form;
+}
