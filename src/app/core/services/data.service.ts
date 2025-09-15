@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
 import { BooksService } from '@features/dashboard/services/books.service';
-import { PaginatedBookResponse } from '@features/dashboard/entities/interfaces/books.interface';
+import { BookResponse, PaginatedBookResponse } from '@features/dashboard/entities/interfaces/books.interface';
 import { UserDetails } from '@shared/entities/interfaces/user.interface';
 
 @Injectable({
@@ -49,6 +49,20 @@ export class DataService {
     this.books.set({
       ...current,
       results: current.results.filter(b => b.id !== bookId),
+    });
+  }
+
+  public updateBookInList(updatedBook: BookResponse): void {
+    const currentBooks = this.books();
+    if (!currentBooks) return;
+
+    const updatedResults = currentBooks.results.map(book =>
+      book.id === updatedBook.id ? updatedBook : book
+    );
+
+    this.books.set({
+      ...currentBooks,
+      results: updatedResults
     });
   }
 }

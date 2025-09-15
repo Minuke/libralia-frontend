@@ -57,4 +57,8 @@ export class BooksService {
     return this.http.get<BookResponse>(`${environment.booksUrl}/${id}/`);
   }
 
+  public updateBook(id: string, payload: Partial<BookResponse>): Observable<BookResponse> {
+    return this.http.patch<BookResponse>(`${environment.booksUrl}/${id}/update/`, payload);
+  }
+
 }

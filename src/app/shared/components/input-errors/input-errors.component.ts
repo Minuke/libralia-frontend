@@ -53,6 +53,9 @@ export class InputErrorsComponent {
 		if (ctrl.errors["missingSpecial"]) {
 			return "Debe contener al menos un carácter especial";
 		}
+		if (ctrl.errors["minDescriptionLength"]) {
+			return `La descripción debe tener al menos ${ctrl.errors["minDescriptionLength"].requiredLength} caracteres: ${ctrl.errors["minDescriptionLength"].actualLength}/${ctrl.errors["minDescriptionLength"].requiredLength}`;
+		}
 
 		return null;
 	}

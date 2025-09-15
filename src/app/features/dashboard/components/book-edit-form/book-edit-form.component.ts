@@ -1,10 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BookResponse } from '@features/dashboard/entities/interfaces/books.interface';
 import { BooksService } from '@features/dashboard/services/books.service';
+import { minDescriptionLengthValidator } from '@features/dashboard/validators/min-description.validator';
 import { InputErrorsComponent } from '@shared/components/input-errors/input-errors.component';
 import { take } from 'rxjs';
+import { DataService } from '../../../../core/services/data.service';
 
 @Component({
   selector: 'app-book-edit-form',
@@ -16,6 +18,8 @@ export class BookEditFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly booksService = inject(BooksService);
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly dataService = inject(DataService);
 
   public bookEditForm!: FormGroup;
   public loading = signal(false);
@@ -28,7 +32,7 @@ export class BookEditFormComponent {
   public ngOnInit(): void {
     this.bookEditForm = this.fb.group({
       title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', [Validators.required, minDescriptionLengthValidator(10)]],
     });
 
     this.bookId = this.route.snapshot.paramMap.get('id')!;
@@ -72,6 +76,30 @@ export class BookEditFormComponent {
     };
 
     console.log('Payload listo para enviar:', payload);
+    this.booksService.updateBook(this.bookId, payload).pipe(take(1)).subscribe({
+      next: (updatedBook) => {
+        this.loading.set(false);
+        this.success.set('Libro actualizado correctamente ✅');
+        this.book.set(updatedBook);
+        this.dataService.updateBookInList(updatedBook);
+        this.router.navigate(['/dashboard/profile']);
+      },
+      error: (err) => {
+        this.loading.set(false);
+
+        if (err.status === 400) {
+          this.error.set('Error de negocio: ' + JSON.stringify(err.error.errors));
+        } else if (err.status === 422) {
+          this.error.set('Error de validación: ' + JSON.stringify(err.error));
+        } else if (err.status === 404) {
+          this.error.set('El libro no existe');
+        } else {
+          this.error.set('Error inesperado al actualizar el libro');
+        }
+
+        console.error('Book update error:', err);
+      }
+    });
 
 
   }
