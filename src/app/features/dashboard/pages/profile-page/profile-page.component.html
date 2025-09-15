@@ -1,6 +1,9 @@
-<div class="profile-page">
-  <app-welcome-message [user]="user()"></app-welcome-message>
-  <app-data-user [user]="user()"></app-data-user>
-  <app-user-books [books]="books()" [currentPage]="currentPage()" (pageChange)="onPageChange($event)">
-  </app-user-books>
-</div>
+@if(user(); as currentUser) {
+  <div class="profile-page">
+    <app-welcome-message [user]="currentUser"></app-welcome-message>
+    <app-data-user [user]="currentUser"></app-data-user>
+    <app-user-books [books]="books()" [currentPage]="currentPage()" (pageChange)="onPageChange($event)"
+      (bookDeleted)="onBookDeleted($event)">
+    </app-user-books>
+  </div>
+}

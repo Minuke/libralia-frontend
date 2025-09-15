@@ -1,50 +1,33 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { AuthService } from '@core/services/auth.service';
+import { Component, inject } from '@angular/core';
+import { DataService } from '@core/services/data.service';
 import { DataUserComponent } from '@features/dashboard/components/data-user/data-user.component';
 import { WelcomeMessageComponent } from '@features/dashboard/components/welcome-message/welcome-messasge.component';
 import { UserBooksComponent } from '../../components/user-books/user-books.component';
-import { PaginatedBookResponse } from '@features/dashboard/entities/interfaces/books.interface';
-import { BooksService } from '@features/dashboard/services/books.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile-page',
   standalone: true,
-  imports: [WelcomeMessageComponent, DataUserComponent, UserBooksComponent],
+  imports: [WelcomeMessageComponent, DataUserComponent, UserBooksComponent, CommonModule],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss'
 })
 export class ProfilePageComponent {
-  private readonly authService = inject(AuthService);
-  private readonly booksService = inject(BooksService);
+  private readonly dataService = inject(DataService);
 
-  public readonly currentUser = this.authService.user!;
-  public readonly user = computed(() => this.currentUser()!);
-
-  public readonly books = signal<PaginatedBookResponse | null>(null);
-  public readonly loadingBooks = signal<boolean>(true);
-  public readonly currentPage = signal<number>(1);
-
-  public ngOnInit(): void {
-    this.loadBooks();
-  }
-
-  public loadBooks(page: number = 1): void {
-    this.loadingBooks.set(true);
-    this.booksService.getBooksByAuthor(this.user().username, page).subscribe({
-      next: (res) => {
-        this.books.set(res);
-        this.currentPage.set(page);
-        this.loadingBooks.set(false);
-      },
-      error: (err) => {
-        console.error('Error loading books:', err);
-        this.loadingBooks.set(false);
-      }
-    });
-  }
+  public readonly user = this.dataService.user;
+  public readonly books = this.dataService.books;
+  public readonly loadingBooks = this.dataService.loadingBooks;
+  public readonly currentPage = this.dataService.currentPage;
 
   public onPageChange(page: number): void {
-    this.loadBooks(page);
+    const currentUser = this.user();
+    if (currentUser) {
+      this.dataService.loadBooks(page, currentUser.username);
+    }
   }
 
+  public onBookDeleted(bookId: string): void {
+    this.dataService.removeBookFromList(bookId);
+  }
 }

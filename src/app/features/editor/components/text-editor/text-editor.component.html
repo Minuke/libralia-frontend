@@ -12,11 +12,16 @@
     [modules]="modulesQuill" 
     (onContentChanged)="onChangeEditor($event)">
   </quill-editor>
-  <div class="editor-form__group"> <app-input-errors [control]="editorForm.get('editor')"></app-input-errors>
+  <div class="editor-form__group">
+    <app-input-errors [control]="editorForm.get('editor')"></app-input-errors>
   </div>
 
   <div class="editor-form__actions">
     <button class="editor-form__button" [disabled]="editorForm.invalid">Guardar</button>
   </div>
-
 </form>
+
+
+<div *ngIf="createdBook() as book" class="success">
+  ✅ Libro creado con ID: {{ book.id }}
+</div>
