@@ -21,7 +21,7 @@ export const AUTH_ROUTES: Routes = [
     path: AuthPages.REGISTER, component: RegisterPageComponent, title: 'Register', canActivate: [authGuard('loggedOut')]
   },
   {
-    path: AuthPages.PASSWORD_RESET, component: PasswordResetPageComponent, title: 'Password Reset', canActivate: [authGuard('loggedIn')]
+    path: AuthPages.PASSWORD_RESET, component: PasswordResetPageComponent, title: 'Password Reset', canActivate: [authGuard('loggedOut')]
   },
   {
     path: "google/callback",
