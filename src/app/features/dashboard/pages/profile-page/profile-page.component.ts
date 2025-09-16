@@ -19,6 +19,13 @@ export class ProfilePageComponent {
   public readonly loadingBooks = this.dataService.loadingBooks;
   public readonly currentPage = this.dataService.currentPage;
 
+  public ngOnInit(): void {
+    const currentUser = this.user();
+    if (currentUser) {
+      this.dataService.loadBooks(1, currentUser.username);
+    }
+  }
+
   public onPageChange(page: number): void {
     const currentUser = this.user();
     if (currentUser) {

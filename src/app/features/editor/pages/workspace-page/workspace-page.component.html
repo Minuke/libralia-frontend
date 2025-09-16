@@ -1,7 +1,7 @@
 <div class="workspace-page">
   <app-side-panel></app-side-panel>
   @if (selectedOption().menu === 'Manuscrito' && selectedOption().option === 'Libro') {
-  <app-text-editor class="editor-area"></app-text-editor>
+  <app-text-editor [book]="book()" class="editor-area"></app-text-editor>
   } @else {
   <app-topic-panel class="content-area" [menu]="selectedOption().menu" [option]="selectedOption().option"
     [icon]="selectedOption().icon">

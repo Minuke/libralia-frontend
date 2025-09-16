@@ -15,6 +15,9 @@
         <p class="user-books__book-description">{{ book.description }}</p>
       </div>
       <div class="user-books__actions">
+        <button [routerLink]="['/editor/workspace', book.id]" class="user-books__btn user-books__btn--write">
+          Escribir
+        </button>
         <button [routerLink]="['/dashboard/book-edit', book.id]" class="user-books__btn user-books__btn--edit">
           Editar
         </button>
@@ -22,6 +25,7 @@
           Eliminar
         </button>
       </div>
+
     </div>
     }
     } @else {

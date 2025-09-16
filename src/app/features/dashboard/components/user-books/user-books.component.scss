@@ -113,6 +113,15 @@
       }
     }
 
+    &--write {
+      background: #22c55e;
+      color: #fff;
+
+      &:hover {
+        background: #16a34a;
+      }
+    }
+
     &--page {
       background: #f3f4f6;
       color: #111;
@@ -127,6 +136,7 @@
       }
     }
   }
+
 
   &__empty {
     font-size: 1rem;
